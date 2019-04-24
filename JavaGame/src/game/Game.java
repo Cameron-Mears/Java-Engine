@@ -45,7 +45,7 @@ final class Game extends Thread implements Runnable
         imageParser = new ImageParser();
         spriteHandler = new SpriteHandler();
         String temp = System.getProperty("user.dir") + "\\JavaGame\\assets\\sprites";
-        spr =  new Sprite(imageParser.parseFolder(new File(temp)), 0.1);
+        spr =  new Sprite(imageParser.parseFolder(new File(temp)), 15);
         spriteHandler.add(spr);
  
     }
@@ -72,7 +72,7 @@ final class Game extends Thread implements Runnable
                 deltaFrame += (deltaNS) / timeFrame;
                 initialTime = currentTime;
 
-                spriteHandler.update(deltaNS/MILLI_SEC);
+                spriteHandler.update(deltaNS);
 
                 if (deltaTick >= 1) 
                 {
@@ -103,6 +103,8 @@ final class Game extends Thread implements Runnable
     void render()
     {
         Graphics g = renderer.createGraphics();
+        g.setColor(Color.WHITE);
+        g.fillRect(0, 0, 1000, 1000);
         g.drawImage(spr.currentFrame(), 0, 0, null);
         renderer.show();
     }

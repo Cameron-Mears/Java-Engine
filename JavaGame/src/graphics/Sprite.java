@@ -12,7 +12,7 @@ public class Sprite
 
     public Sprite(BufferedImage images[], double animationSpeed)
     {
-        animationSpeed /= 1000;
+        animationSpeed = 1000000000/animationSpeed;
         this.images = images;
         this.animationSpeed = animationSpeed;
         this.currentwait = animationSpeed;

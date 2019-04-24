@@ -9,12 +9,12 @@ public class SpriteHandler
 {
     public static LinkedList<Sprite> sprites = new LinkedList<Sprite>();
 
-    public void update(double deltaS)
+    public void update(double deltaNS)
     {
         Iterator<Sprite> iterator = sprites.iterator();
         while (iterator.hasNext())
         {
-            iterator.next().update(deltaS);
+            iterator.next().update(deltaNS);
         }
     }
 
