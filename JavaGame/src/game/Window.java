@@ -25,7 +25,6 @@ public class Window
         frame.setTitle(title);
         frame.setSize(width, height);
         frame.setIconImage(icon);
-        frame.setVisible(true);
 
     }
 

@@ -28,6 +28,7 @@ public class ImageParser implements Functions
                     BufferedImage temp = ImageIO.read(resources[index]);
                     BufferedImage temp2 = gc.createCompatibleImage(temp.getWidth(), temp.getHeight());
                     temp2.setData(temp.getData());
+                    images[index] = temp2;
 
                     
                 }

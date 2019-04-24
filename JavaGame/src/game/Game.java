@@ -1,5 +1,7 @@
 package game;
 
+import java.awt.Color;
+import java.awt.Graphics;
 import java.awt.GraphicsConfiguration;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
@@ -10,12 +12,13 @@ import java.io.File;
 
 import graphics.ImageParser;
 import graphics.Renderer;
+import graphics.Sprite;
 
 
 final class Game extends Thread implements Runnable
 {
     private boolean running = true;
-    private final int FPS = 1;
+    private final int FPS = 100;
     private final int TPS = 1;
     private final long SEC = 1000000000;
     private final long MILLI_SEC = 1000000;
@@ -24,6 +27,8 @@ final class Game extends Thread implements Runnable
     public static GraphicsConfiguration graphicsConfig;
     public static ImageParser imageParser;
     public static Renderer renderer;
+    public static SpriteHandler spriteHandler;
+    private Sprite spr;
 
     public Game() throws InterruptedException
     {
@@ -33,13 +38,15 @@ final class Game extends Thread implements Runnable
 
     void init()
     {
-        window = new Window(null, 1000, 1000, false, null);
-        renderer = new Renderer();
-        window.getWindow().add(renderer);
+        window = new Window("te", 1000, 1000, false, null);
+        renderer = new Renderer(window);
         graphicsConfig = graphicsInit(graphicsConfig);
+        window.getWindow().setVisible(true);
         imageParser = new ImageParser();
+        spriteHandler = new SpriteHandler();
         String temp = System.getProperty("user.dir") + "\\JavaGame\\assets\\sprites";
-        imageParser.parseFolder(new File(temp));
+        spr =  new Sprite(imageParser.parseFolder(new File(temp)), 0.1);
+        spriteHandler.add(spr);
  
     }
 
@@ -50,8 +57,8 @@ final class Game extends Thread implements Runnable
     {
 
         long initialTime = System.nanoTime();
-        final double timeTick = 1000000000 / TPS;
-        final double timeFrame = 1000000000 / FPS;
+        final double timeTick = SEC / TPS;
+        final double timeFrame = SEC / FPS;
         double deltaTick = 0, deltaFrame = 0;
         int frames = 0, ticks = 0;
         long timer = System.currentTimeMillis();
@@ -64,6 +71,8 @@ final class Game extends Thread implements Runnable
                 deltaTick += (deltaNS) / timeTick;
                 deltaFrame += (deltaNS) / timeFrame;
                 initialTime = currentTime;
+
+                spriteHandler.update(deltaNS/MILLI_SEC);
 
                 if (deltaTick >= 1) 
                 {
@@ -93,7 +102,9 @@ final class Game extends Thread implements Runnable
 
     void render()
     {
-
+        Graphics g = renderer.createGraphics();
+        g.drawImage(spr.currentFrame(), 0, 0, null);
+        renderer.show();
     }
 
     void update()
