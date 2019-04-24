@@ -6,8 +6,11 @@ import java.awt.GraphicsEnvironment;
 import java.awt.Rectangle;
 import java.awt.geom.AffineTransform;
 import java.awt.image.ColorModel;
+import java.io.File;
 
-import javax.swing.JFrame;
+import graphics.ImageParser;
+import graphics.Renderer;
+
 
 final class Game extends Thread implements Runnable
 {
@@ -19,6 +22,8 @@ final class Game extends Thread implements Runnable
     private static long deltaNS = 0;
     public static Window window;
     public static GraphicsConfiguration graphicsConfig;
+    public static ImageParser imageParser;
+    public static Renderer renderer;
 
     public Game() throws InterruptedException
     {
@@ -29,8 +34,13 @@ final class Game extends Thread implements Runnable
     void init()
     {
         window = new Window(null, 1000, 1000, false, null);
-        graphicsInit(graphicsConfig);
-
+        renderer = new Renderer();
+        window.getWindow().add(renderer);
+        graphicsConfig = graphicsInit(graphicsConfig);
+        imageParser = new ImageParser();
+        String temp = System.getProperty("user.dir") + "\\JavaGame\\assets\\sprites";
+        imageParser.parseFolder(new File(temp));
+ 
     }
 
     
@@ -39,45 +49,46 @@ final class Game extends Thread implements Runnable
     public void run() 
     {
 
-    long initialTime = System.nanoTime();
-    final double timeTick = 1000000000 / TPS;
-    final double timeFrame = 1000000000 / FPS;
-    double deltaTick = 0, deltaFrame = 0;
-    int frames = 0, ticks = 0;
-    long timer = System.currentTimeMillis();
+        long initialTime = System.nanoTime();
+        final double timeTick = 1000000000 / TPS;
+        final double timeFrame = 1000000000 / FPS;
+        double deltaTick = 0, deltaFrame = 0;
+        int frames = 0, ticks = 0;
+        long timer = System.currentTimeMillis();
 
-        while (running) {
-
-            long currentTime = System.nanoTime();
-            deltaNS = (currentTime - initialTime);
-            deltaTick += (deltaNS) / timeTick;
-            deltaFrame += (deltaNS) / timeFrame;
-            initialTime = currentTime;
-
-            if (deltaTick >= 1) 
+            while (running) 
             {
-               // getInput();
-                //update();
-                ticks++;
-                deltaTick--;
-            }
 
-            if (deltaFrame >= 1) 
-            {
-                render();
-                frames++;
-                deltaFrame--;
-            }
+                long currentTime = System.nanoTime();
+                deltaNS = (currentTime - initialTime);
+                deltaTick += (deltaNS) / timeTick;
+                deltaFrame += (deltaNS) / timeFrame;
+                initialTime = currentTime;
 
-            if (System.currentTimeMillis() - timer > 1000) 
-            {                
-                System.out.println(String.format("TPS: %s, FPS: %s", ticks, frames));
-             
-                frames = 0;
-                ticks = 0;
-                timer += 1000;
+                if (deltaTick >= 1) 
+                {
+                // getInput();
+                    //update();
+                    ticks++;
+                    deltaTick--;
+                }
+
+                if (deltaFrame >= 1) 
+                {
+                    render();
+                    frames++;
+                    deltaFrame--;
+                }
+
+                if (System.currentTimeMillis() - timer > 1000) 
+                {                
+                    System.out.println(String.format("TPS: %s, FPS: %s", ticks, frames));
+                
+                    frames = 0;
+                    ticks = 0;
+                    timer += 1000;
+                }
             }
-        }
     }
 
     void render()
@@ -106,24 +117,25 @@ final class Game extends Thread implements Runnable
         return running;
     }
 
-    private void graphicsInit(GraphicsConfiguration config)
+    private GraphicsConfiguration graphicsInit(GraphicsConfiguration config)
     {
         GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+        
         config = new GraphicsConfiguration(){
         
             @Override
             public AffineTransform getNormalizingTransform() {
-                return null;
+                return new AffineTransform();
             }
         
             @Override
             public GraphicsDevice getDevice() {
-                return null;
+                return ge.getDefaultScreenDevice();
             }
         
             @Override
             public AffineTransform getDefaultTransform() {
-                return null;
+                return new AffineTransform();
             }
         
             @Override
@@ -132,15 +144,19 @@ final class Game extends Thread implements Runnable
             }
         
             @Override
-            public ColorModel getColorModel() {
-                return null;
+            public ColorModel getColorModel() 
+            {
+                return ColorModel.getRGBdefault();
             }
         
             @Override
-            public Rectangle getBounds() {
-                return null;
+            public Rectangle getBounds() 
+            {
+                return ge.getMaximumWindowBounds();
             }
         };
+
+        return config;
     }
 
     public static void main(String[] args) throws Exception

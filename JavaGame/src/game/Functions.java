@@ -1,16 +1,21 @@
 package game;
 
-
+import java.awt.GraphicsConfiguration;
 
 public interface Functions
 {
-    default Window getWindow()
+    public default Window getWindow()
     {
-        return null;
+        return Game.window;
     };
 
-    default double deltaSEC()
+    public default double deltaSEC()
     {
         return Game.deltaNS()/1000000000;
+    }
+
+    public default GraphicsConfiguration graphicsConfig()
+    {
+        return Game.graphicsConfig;
     }
 }

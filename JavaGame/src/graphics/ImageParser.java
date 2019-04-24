@@ -1,5 +1,6 @@
 package graphics;
 
+import java.awt.GraphicsConfiguration;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -7,11 +8,15 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-public final class ImageParser
+import game.Functions;
+
+public class ImageParser implements Functions
 {
-    public static BufferedImage[] parseFolder(File folder)
+
+    public BufferedImage[] parseFolder(File folder)
     {
-        
+            GraphicsConfiguration gc = graphicsConfig();
+            System.out.println(gc);
             File resources[] = folder.listFiles();
             BufferedImage images[] = new BufferedImage[resources.length];
 
@@ -20,7 +25,11 @@ public final class ImageParser
                 try
                 {
                     //parse images to folder
-                    images[index] = ImageIO.read(resources[index]);
+                    BufferedImage temp = ImageIO.read(resources[index]);
+                    BufferedImage temp2 = gc.createCompatibleImage(temp.getWidth(), temp.getHeight());
+                    temp2.setData(temp.getData());
+
+                    
                 }
                 catch (IOException e)
                 {
