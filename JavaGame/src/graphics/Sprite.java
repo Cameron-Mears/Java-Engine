@@ -2,6 +2,7 @@ package graphics;
 
 import java.awt.image.BufferedImage;
 
+
 public class Sprite
 {
     private BufferedImage images[];
@@ -10,9 +11,9 @@ public class Sprite
     private double animationSpeed;
     private double currentwait;
 
-    public Sprite(BufferedImage images[], double animationSpeed)
+    public Sprite(BufferedImage images[], double FPS)
     {
-        animationSpeed = 1000000000/animationSpeed;
+        animationSpeed = 1000000000/FPS;
         this.images = images;
         this.animationSpeed = animationSpeed;
         this.currentwait = animationSpeed;

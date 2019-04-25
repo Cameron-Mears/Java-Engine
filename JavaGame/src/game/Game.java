@@ -10,28 +10,30 @@ import java.awt.geom.AffineTransform;
 import java.awt.image.ColorModel;
 import java.io.File;
 
+import entities.Player;
 import game.input.InputHandler;
 import graphics.ImageParser;
 import graphics.Renderer;
 import graphics.Sprite;
 
 
-final class Game extends Thread implements Runnable
+public final class Game extends Thread implements Runnable
 {
     private boolean running = true;
     private final int FPS = 100;
-    private final int TPS = 1;
+    private final int TPS = 10;
     private final long SEC = 1000000000;
     private final long MILLI_SEC = 1000000;
     private static long deltaNS = 0;
+    public static long deltaMS;
     public static Window window;
     public static GraphicsConfiguration graphicsConfig;
     public static ImageParser imageParser;
     public static Renderer renderer;
     public static SpriteHandler spriteHandler;
-    private Sprite spr;
+    private Player player;
 
-    public Game() throws InterruptedException
+    private Game() throws InterruptedException
     {
         init();
         run();
@@ -44,11 +46,8 @@ final class Game extends Thread implements Runnable
         graphicsConfig = graphicsInit(graphicsConfig);
         window.getWindow().setVisible(true);
         imageParser = new ImageParser();
-        spriteHandler = new SpriteHandler();
-        String temp = System.getProperty("user.dir") + "\\JavaGame\\assets\\sprites";
-        spr =  new Sprite(imageParser.parseFolder(new File(temp)), 15);
-        spriteHandler.add(spr);
- 
+        spriteHandler = new SpriteHandler(); 
+        player = new Player(100, 0);
     }
 
     
@@ -63,6 +62,8 @@ final class Game extends Thread implements Runnable
         double deltaTick = 0, deltaFrame = 0;
         int frames = 0, ticks = 0;
         long timer = System.currentTimeMillis();
+        long initTime = timer;
+
 
             while (running) 
             {
@@ -77,6 +78,10 @@ final class Game extends Thread implements Runnable
 
                 if (deltaTick >= 1) 
                 {
+                    long newTimeMS = System.currentTimeMillis();
+                    deltaMS = newTimeMS - initTime;
+                    initTime = newTimeMS;
+
                     InputHandler.update();
                     tick();
                     ticks++;
@@ -104,15 +109,13 @@ final class Game extends Thread implements Runnable
     void render()
     {
         Graphics g = renderer.createGraphics();
-        g.setColor(Color.WHITE);
-        g.fillRect(0, 0, 1000, 1000);
-        g.drawImage(spr.currentFrame(), 0, 0, null);
+        player.render(g);
         renderer.show();
     }
 
     void tick()
     {
-        
+        player.tick();
     }
 
     static long deltaNS()
@@ -120,12 +123,17 @@ final class Game extends Thread implements Runnable
         return deltaNS;
     }
 
+    static long deltaMS()
+    {
+        return deltaMS;
+    }
+
     boolean isRunning()
     {
         return running;
     }
 
-    private GraphicsConfiguration graphicsInit(GraphicsConfiguration config)
+    private static GraphicsConfiguration graphicsInit(GraphicsConfiguration config)
     {
         GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
         

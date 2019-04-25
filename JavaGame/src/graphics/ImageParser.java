@@ -8,14 +8,15 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import game.Game;
 import game.Gamecore;
 
 public class ImageParser implements Gamecore
 {
 
-    public BufferedImage[] parseFolder(File folder)
+    public static BufferedImage[] parseFolder(File folder)
     {
-            GraphicsConfiguration gc = graphicsConfig();
+            GraphicsConfiguration gc = Game.graphicsConfig;
             System.out.println(gc);
             File resources[] = folder.listFiles();
             BufferedImage images[] = new BufferedImage[resources.length];

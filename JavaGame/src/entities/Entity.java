@@ -1,12 +1,16 @@
 package entities;
 
+import java.awt.Graphics;
+
+import game.Gamecore;
 import game.input.Input;
+import physics.PhysicsCal;
 import physics.Vec2d;
 
-public abstract class Entity implements Input
+public abstract class Entity implements Input, Gamecore, PhysicsCal
 {
-    private Vec2d vec;
-    private int mass;
+    protected Vec2d vec;
+    protected int mass;
 
     public Entity(double x, double y)
     {
@@ -20,8 +24,13 @@ public abstract class Entity implements Input
         return vec;
     }
 
-    public void init()
+    public void tick()
     {
 
+    }
+
+    public void render(Graphics g)
+    {
+        
     }
 }

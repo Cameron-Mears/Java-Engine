@@ -2,6 +2,8 @@ package game;
 
 import java.awt.GraphicsConfiguration;
 
+import graphics.Sprite;
+
 public interface Gamecore
 {
     public default Window getWindow()
@@ -11,11 +13,17 @@ public interface Gamecore
 
     public default double deltaSEC()
     {
-        return Game.deltaNS()/1000000000;
+        double temp = (double) Game.deltaMS();
+        return temp/1000;
     }
 
     public default GraphicsConfiguration graphicsConfig()
     {
         return Game.graphicsConfig;
+    }
+
+    public default void addSprite(Sprite spr)
+    {
+        Game.spriteHandler.add(spr);
     }
 }

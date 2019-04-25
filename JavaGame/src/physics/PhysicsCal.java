@@ -2,8 +2,9 @@ package physics;
 
 public interface PhysicsCal
 {
-    default void vecUpdate(double deltaS, Vec2d vec)
+    default Vec2d vecUpdate(double deltaS, Vec2d vec)
     {
+        System.out.println(deltaS);
         vec.x += (vec.velX * deltaS);
         vec.y += (vec.velY * deltaS);
 
@@ -13,6 +14,7 @@ public interface PhysicsCal
         vec.velX += (vec.acelX * deltaS);
         vec.velY += (vec.acelY * deltaS);
 
+        return vec;
     }
 
 }
