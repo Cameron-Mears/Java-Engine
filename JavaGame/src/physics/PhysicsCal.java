@@ -14,4 +14,5 @@ public interface PhysicsCal
         vec.velY += (vec.acelY * deltaS);
 
     }
+
 }

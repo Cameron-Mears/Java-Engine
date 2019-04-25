@@ -13,7 +13,7 @@ public class Renderer extends Canvas
     Graphics g;
     public Renderer(Window window)
     {
-        this.setSize(window.getWindow().getWidth(), window.getWindow().getHeight());
+        //this.setSize(window.getWindow().getWidth(), window.getWindow().getHeight());
         window.getWindow().add(this);
     }
 

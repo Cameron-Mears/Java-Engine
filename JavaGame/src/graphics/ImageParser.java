@@ -8,9 +8,9 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-import game.Functions;
+import game.Gamecore;
 
-public class ImageParser implements Functions
+public class ImageParser implements Gamecore
 {
 
     public BufferedImage[] parseFolder(File folder)

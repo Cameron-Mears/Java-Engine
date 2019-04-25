@@ -10,6 +10,7 @@ import java.awt.geom.AffineTransform;
 import java.awt.image.ColorModel;
 import java.io.File;
 
+import game.input.InputHandler;
 import graphics.ImageParser;
 import graphics.Renderer;
 import graphics.Sprite;
@@ -76,8 +77,8 @@ final class Game extends Thread implements Runnable
 
                 if (deltaTick >= 1) 
                 {
-                // getInput();
-                    //update();
+                    InputHandler.update();
+                    tick();
                     ticks++;
                     deltaTick--;
                 }
@@ -109,7 +110,7 @@ final class Game extends Thread implements Runnable
         renderer.show();
     }
 
-    void update()
+    void tick()
     {
         
     }
@@ -119,12 +120,6 @@ final class Game extends Thread implements Runnable
         return deltaNS;
     }
 
-    void sleepNano(long nano) throws InterruptedException
-    {
-        long nanos = nano % (MILLI_SEC);
-        long millis = (nano - nanos)/1000000;
-        sleep(millis, (int) nanos);
-    }
     boolean isRunning()
     {
         return running;

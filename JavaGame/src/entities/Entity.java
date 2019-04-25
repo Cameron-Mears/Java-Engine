@@ -1,12 +1,12 @@
 package entities;
 
-import java.awt.image.BufferedImage;
-
+import game.input.Input;
 import physics.Vec2d;
 
-public abstract class Entity
+public abstract class Entity implements Input
 {
     private Vec2d vec;
+    private int mass;
 
     public Entity(double x, double y)
     {
