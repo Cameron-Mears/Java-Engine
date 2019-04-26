@@ -41,8 +41,10 @@ public final class Game extends Thread implements Runnable
 
     void init()
     {
+        InputHandler IH = new InputHandler();
         window = new Window("te", 1000, 1000, false, null);
         renderer = new Renderer(window);
+        renderer.addKeyListener(IH);
         graphicsConfig = graphicsInit(graphicsConfig);
         window.getWindow().setVisible(true);
         imageParser = new ImageParser();

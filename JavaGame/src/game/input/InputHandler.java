@@ -90,7 +90,7 @@ public final class InputHandler extends KeyAdapter implements MouseListener, Mou
     public void keyPressed(KeyEvent e) 
     {
         int index = e.getKeyCode();
-
+        System.out.println("sd");
         try 
         {
             if (!PressedKey[index] && !DownKey[index]) 
