@@ -4,7 +4,6 @@ public interface PhysicsCal
 {
     default Vec2d vecUpdate(double deltaS, Vec2d vec)
     {
-        System.out.println(deltaS);
         vec.x += (vec.velX * deltaS);
         vec.y += (vec.velY * deltaS);
 

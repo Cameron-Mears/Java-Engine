@@ -17,7 +17,6 @@ public class ImageParser implements Gamecore
     public static BufferedImage[] parseFolder(File folder)
     {
             GraphicsConfiguration gc = Game.graphicsConfig;
-            System.out.println(gc);
             File resources[] = folder.listFiles();
             BufferedImage images[] = new BufferedImage[resources.length];
 

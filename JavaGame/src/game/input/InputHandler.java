@@ -1,7 +1,11 @@
 package game.input;
 
+import game.Window;
+import graphics.Renderer;
+
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
@@ -9,7 +13,11 @@ import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
 import java.util.LinkedList;
 
-public final class InputHandler extends KeyAdapter implements MouseListener, MouseMotionListener, MouseWheelListener {
+import game.Gamecore;
+
+public final class InputHandler extends KeyAdapter implements KeyListener, MouseListener, MouseMotionListener, MouseWheelListener
+,Gamecore 
+{
 
     private static LinkedList<Integer> ResetKeys = new LinkedList<Integer>();
 
@@ -29,6 +37,11 @@ public final class InputHandler extends KeyAdapter implements MouseListener, Mou
     public static int mouseX = 0;
     public static int mouseY = 0;
 
+    public InputHandler()
+    {
+
+    }
+
     @Override
     public void mouseClicked(MouseEvent e) {
 
@@ -47,6 +60,7 @@ public final class InputHandler extends KeyAdapter implements MouseListener, Mou
     @Override
     public void mousePressed(MouseEvent e) {
         int index = e.getButton();
+
         try {
             if (!PressedMouse[index] && !DownMouse[index]) {
                 PressedMouse[index] = true;
@@ -87,6 +101,7 @@ public final class InputHandler extends KeyAdapter implements MouseListener, Mou
         WheelDirection = e.getWheelRotation();
     }
 
+    @Override
     public void keyPressed(KeyEvent e) 
     {
         int index = e.getKeyCode();
@@ -103,6 +118,7 @@ public final class InputHandler extends KeyAdapter implements MouseListener, Mou
         } catch (IndexOutOfBoundsException e0) {}
     }
 
+    @Override
     public void keyReleased(KeyEvent e) 
     {
         int index = e.getKeyCode();

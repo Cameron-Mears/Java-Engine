@@ -27,8 +27,8 @@ public class Player extends Entity
     @Override
     public void tick()
     {
-        vec.acelX = 10;
-        vec.acelY = 20 - vec.velX;
+        if (keyDown('A')) vec.x -= 1;
+        if (keyDown('D')) vec.x += 1;
         vec = vecUpdate(deltaSEC(), vec);
     }
 

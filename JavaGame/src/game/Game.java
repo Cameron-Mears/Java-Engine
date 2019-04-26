@@ -20,8 +20,8 @@ import graphics.Sprite;
 public final class Game extends Thread implements Runnable
 {
     private boolean running = true;
-    private final int FPS = 100;
-    private final int TPS = 10;
+    private final int FPS = 100000000;
+    private final int TPS = 1000;
     private final long SEC = 1000000000;
     private final long MILLI_SEC = 1000000;
     private static long deltaNS = 0;
@@ -31,7 +31,7 @@ public final class Game extends Thread implements Runnable
     public static ImageParser imageParser;
     public static Renderer renderer;
     public static SpriteHandler spriteHandler;
-    private Player player;
+    private Handler handler;
 
     private Game() throws InterruptedException
     {
@@ -49,7 +49,10 @@ public final class Game extends Thread implements Runnable
         window.getWindow().setVisible(true);
         imageParser = new ImageParser();
         spriteHandler = new SpriteHandler(); 
-        player = new Player(100, 0);
+        handler = new Handler();
+        Player temp = new Player(100, 0);
+        handler.tickAdd(temp);
+        handler.renderAdd(temp);
     }
 
     
@@ -111,13 +114,13 @@ public final class Game extends Thread implements Runnable
     void render()
     {
         Graphics g = renderer.createGraphics();
-        player.render(g);
+        handler.render(g);
         renderer.show();
     }
 
     void tick()
     {
-        player.tick();
+        handler.tick();
     }
 
     static long deltaNS()

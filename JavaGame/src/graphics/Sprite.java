@@ -18,7 +18,6 @@ public class Sprite
         this.animationSpeed = animationSpeed;
         this.currentwait = animationSpeed;
         this.frames = images.length;
-        System.out.println(images.length);
     }
 
     public int current()
@@ -53,9 +52,6 @@ public class Sprite
         {
             currentwait = animationSpeed + currentwait;
             currentFrame = (currentFrame + 1 > frames - 1)? 0:currentFrame + 1;
-            System.out.println(currentFrame);
         }
-
     }
-
 }
