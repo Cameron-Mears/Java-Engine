@@ -4,7 +4,7 @@ import java.util.LinkedList;
 
 import entities.Entity;
 
-import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.util.Iterator;
 
 public class Handler
@@ -23,7 +23,7 @@ public class Handler
         }
     }
 
-    public void render(Graphics g)
+    public void render(Graphics2D g)
     {
         Iterator<Entity> iterator = renderEntities.iterator();
 

@@ -1,6 +1,6 @@
 package entities;
 
-import java.awt.Graphics;
+import java.awt.Graphics2D;
 
 import game.Gamecore;
 import game.input.Input;
@@ -29,7 +29,7 @@ public abstract class Entity implements Input, Gamecore, PhysicsCal
 
     }
 
-    public void render(Graphics g)
+    public void render(Graphics2D g)
     {
         
     }

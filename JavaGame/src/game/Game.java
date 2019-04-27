@@ -2,6 +2,7 @@ package game;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.GraphicsConfiguration;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
@@ -20,8 +21,8 @@ import graphics.Sprite;
 public final class Game extends Thread implements Runnable
 {
     private boolean running = true;
-    private final int FPS = 100000000;
-    private final int TPS = 1000;
+    private final int FPS = 1000000000;
+    private final int TPS = 1000000000;
     private final long SEC = 1000000000;
     private final long MILLI_SEC = 1000000;
     private static long deltaNS = 0;
@@ -113,7 +114,7 @@ public final class Game extends Thread implements Runnable
 
     void render()
     {
-        Graphics g = renderer.createGraphics();
+        Graphics2D g = renderer.createGraphics();
         handler.render(g);
         renderer.show();
     }
