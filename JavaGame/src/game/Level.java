@@ -8,8 +8,12 @@ import gameobjects.Block;
 
 public class Level
 {
-    public static Block[][] grid;
+    public Block[][] grid;
     private BufferedImage[] backgrounds;
+
+    /*
+        contains blocks of level, render method render a certain range of blocks in the array for better prefornce (unnessarcy rendering)
+    */
 
     public void render(Graphics2D g, int xStart, int yStart, int xEnd, int yEnd)
     {

@@ -1,5 +1,8 @@
 package game.input;
 
+/*
+    interface for receving input
+*/
 public interface Input
 {
     default boolean keyDown(int key)
@@ -35,5 +38,15 @@ public interface Input
     default boolean WheelMoved(MouseWheelDirection direction)
     {
         return InputHandler.WheelMoved(direction);
+    }
+
+    default int mouseX()
+    {
+        return InputHandler.mouseX;
+    }
+
+    default int mouseY() 
+    {
+        return InputHandler.mouseY;
     }
 }

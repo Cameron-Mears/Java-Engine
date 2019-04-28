@@ -1,5 +1,8 @@
 package physics;
 
+/*
+    runs calculations for new positions, velocities for entities
+*/
 public interface PhysicsCal
 {
     default Vec2d vecUpdate(double deltaS, Vec2d vec)

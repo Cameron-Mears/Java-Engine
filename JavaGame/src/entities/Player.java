@@ -2,7 +2,9 @@ package entities;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.event.KeyEvent;
 import java.awt.geom.AffineTransform;
+import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.io.File;
 
@@ -15,13 +17,20 @@ import physics.Vec2d;
 
 public class Player extends Entity
 {
+    /*
+     * images for sprites are contained in static folders to reduce RAM usage and
+     * computing time as ImageParser.parseFolder() is very slow. (like 3ms per frame)
+     */
     private static BufferedImage[] images = ImageParser.parseFolder(new File(System.getProperty("user.dir") + "\\JavaGame\\assets\\sprites\\player"));
+    private static BufferedImage[] xflipImages = ImageParser.flipImages(images);
+
     private Sprite sprite;
+    private double angle = 0.1;
 
     public Player(double x, double y)
     {
         super( x, y);
-        sprite = new Sprite(images, 15);
+        sprite = new Sprite(xflipImages, 15);
         addSprite(sprite);
     }
 
@@ -30,17 +39,24 @@ public class Player extends Entity
     {
         if (keyDown('A')) vec.velX = -100;
         if (keyDown('D')) vec.velX = 100;
+        if (keyDown(KeyEvent.VK_RIGHT)) angle += 0.1;
+        if (keyDown(KeyEvent.VK_SPACE)) sprite.setImages(images);
+        if (keyDown('W')) sprite.setImages(xflipImages);
         vec = vecUpdate(deltaSEC(), vec);
+
     }
 
     @Override
     public void render(Graphics2D g)
     {
+        BufferedImage image = sprite.currentFrame();
         g.setColor(Color.WHITE);
         g.fillRect(0, 0, 1000, 1000);
         AffineTransform af = new AffineTransform();
-        af.translate(vec.x, vec.y);
-        af.rotate(0.8);
-        g.drawImage(sprite.currentFrame(), af, null);
+        g.setColor(Color.RED);
+        af.setToTranslation(vec.x, vec.y);
+        af.rotate(angle, image.getWidth()/2, image.getHeight() / 2);
+        g.drawImage(image, af, null);
+        g.fillRect((int) vec.x - 2 + image.getWidth() / 2, (int) vec.y + image.getHeight() / 2 - 2, 4, 4);
     }
 }

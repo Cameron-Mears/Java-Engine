@@ -8,11 +8,14 @@ import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.awt.Rectangle;
 import java.awt.geom.AffineTransform;
+import java.awt.image.BufferedImage;
 import java.awt.image.ColorModel;
 import java.io.File;
 
+import entities.LevelConstructor;
 import entities.Player;
 import game.input.InputHandler;
+import gameobjects.Block;
 import graphics.ImageParser;
 import graphics.Renderer;
 import graphics.Sprite;
@@ -21,8 +24,8 @@ import graphics.Sprite;
 public final class Game extends Thread implements Runnable
 {
     private boolean running = true;
-    private final int FPS = 1000000000;
-    private final int TPS = 1000000000;
+    private final int FPS = 10000;
+    private final int TPS = 10;
     private final long SEC = 1000000000;
     private final long MILLI_SEC = 1000000;
     private static long deltaNS = 0;
@@ -33,8 +36,10 @@ public final class Game extends Thread implements Runnable
     public static Renderer renderer;
     public static SpriteHandler spriteHandler;
     private Handler handler;
+    private LevelConstructor levelConstructor;
+    private Level level;
 
-    private Game() throws InterruptedException
+    private Game()
     {
         init();
         run();
@@ -42,18 +47,25 @@ public final class Game extends Thread implements Runnable
 
     void init()
     {
+        imageParser = new ImageParser();
+        graphicsConfig = graphicsInit(graphicsConfig);
         InputHandler IH = new InputHandler();
-        window = new Window("te", 1000, 1000, false, null);
+        window = new Window("te", 1000, 1000, false, ImageParser.parseFolder(new File(System.getProperty("user.dir") + "\\JavaGame\\assets\\sprites\\sadad"))[0]);
         renderer = new Renderer(window);
         renderer.addKeyListener(IH);
-        graphicsConfig = graphicsInit(graphicsConfig);
+        renderer.addMouseMotionListener(IH);
+        renderer.addMouseListener(IH);
+        renderer.addMouseWheelListener(IH);
+
         window.getWindow().setVisible(true);
-        imageParser = new ImageParser();
         spriteHandler = new SpriteHandler(); 
         handler = new Handler();
-        Player temp = new Player(100, 0);
+        Player temp = new Player(100, 100);
         handler.tickAdd(temp);
         handler.renderAdd(temp);
+        levelConstructor = new LevelConstructor();
+        level = levelConstructor.newLevel(level);
+
     }
 
     
@@ -73,6 +85,10 @@ public final class Game extends Thread implements Runnable
 
             while (running) 
             {
+                /*
+                    Checks time passed until the next time the game needs to update or render
+                    to reach target frames/ticks.
+                */
 
                 long currentTime = System.nanoTime();
                 deltaNS = (currentTime - initialTime);
@@ -80,14 +96,17 @@ public final class Game extends Thread implements Runnable
                 deltaFrame += (deltaNS) / timeFrame;
                 initialTime = currentTime;
 
-                spriteHandler.update(deltaNS);
 
                 if (deltaTick >= 1) 
                 {
+                    /*
+                        the physics, sprites etc. update from the deltaMS
+                        instead of DeltaNS due to loss of accuarcy when dividing by 1 billion
+                    */
                     long newTimeMS = System.currentTimeMillis();
                     deltaMS = newTimeMS - initTime;
                     initTime = newTimeMS;
-
+                    spriteHandler.update(deltaMS);
                     InputHandler.update();
                     tick();
                     ticks++;
@@ -115,6 +134,7 @@ public final class Game extends Thread implements Runnable
     void render()
     {
         Graphics2D g = renderer.createGraphics();
+        level.render(g, 0, 0, 1000, 1000);
         handler.render(g);
         renderer.show();
     }
@@ -138,6 +158,10 @@ public final class Game extends Thread implements Runnable
     {
         return running;
     }
+
+    /*
+        Setup a graphics configuration this will use the GPU if avaible and help images render more effienly
+    */
 
     private static GraphicsConfiguration graphicsInit(GraphicsConfiguration config)
     {
@@ -181,7 +205,7 @@ public final class Game extends Thread implements Runnable
         return config;
     }
 
-    public static void main(String[] args) throws Exception
+    public static void main(String[] args)
     {
         new Game();
     }

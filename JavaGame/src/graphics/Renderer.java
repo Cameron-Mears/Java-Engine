@@ -9,8 +9,8 @@ import game.Window;
 
 public class Renderer extends Canvas
 {
+    private static final long serialVersionUID = -8352885578412682145L;
     BufferStrategy bs;
-    Graphics2D g;
     public Renderer(Window window)
     {
         //this.setSize(window.getWindow().getWidth(), window.getWindow().getHeight());
@@ -25,7 +25,7 @@ public class Renderer extends Canvas
             this.createBufferStrategy(2);
             bs = this.getBufferStrategy();
         }
-        g = (Graphics2D) bs.getDrawGraphics();
+        Graphics2D g = (Graphics2D) bs.getDrawGraphics();
         return g;
 
 
@@ -33,7 +33,6 @@ public class Renderer extends Canvas
 
     public void show()
     {
-        g.dispose();
         bs.show();
     }
 }

@@ -1,11 +1,17 @@
 package game;
 
 import java.awt.GraphicsConfiguration;
+import java.awt.geom.AffineTransform;
+import java.awt.image.AffineTransformOp;
+import java.awt.image.BufferedImage;
 
 import graphics.Sprite;
 
 public interface Gamecore
 {
+    /*
+        Interface for acess to main componets of game pretty self explanitory
+    */
     public default Window getWindow()
     {
         return Game.window;
@@ -26,4 +32,6 @@ public interface Gamecore
     {
         Game.spriteHandler.add(spr);
     }
+
+
 }

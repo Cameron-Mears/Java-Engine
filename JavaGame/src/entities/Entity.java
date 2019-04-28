@@ -7,6 +7,10 @@ import game.input.Input;
 import physics.PhysicsCal;
 import physics.Vec2d;
 
+/*
+    super class for entities.
+*/
+
 public abstract class Entity implements Input, Gamecore, PhysicsCal
 {
     protected Vec2d vec;

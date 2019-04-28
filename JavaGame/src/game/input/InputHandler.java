@@ -15,8 +15,10 @@ import java.util.LinkedList;
 
 import game.Gamecore;
 
-public final class InputHandler extends KeyAdapter implements KeyListener, MouseListener, MouseMotionListener, MouseWheelListener
-,Gamecore 
+/*
+    keeps track of button states using awt keyevents
+*/
+public final class InputHandler extends KeyAdapter implements KeyListener, MouseListener, MouseMotionListener, MouseWheelListener, Gamecore 
 {
 
     private static LinkedList<Integer> ResetKeys = new LinkedList<Integer>();
@@ -32,7 +34,7 @@ public final class InputHandler extends KeyAdapter implements KeyListener, Mouse
     private static boolean[] ReleasedMouse = new boolean[5];
 
     private static int WheelDirection = 0;
-    private static boolean flagged = false; // this is to determine if we need to run reset loops on certain loops
+    private static boolean flagged = false; // this is to determine if to run reset loops
 
     public static int mouseX = 0;
     public static int mouseY = 0;
@@ -105,7 +107,6 @@ public final class InputHandler extends KeyAdapter implements KeyListener, Mouse
     public void keyPressed(KeyEvent e) 
     {
         int index = e.getKeyCode();
-        System.out.println("sd");
         try 
         {
             if (!PressedKey[index] && !DownKey[index]) 
@@ -131,7 +132,7 @@ public final class InputHandler extends KeyAdapter implements KeyListener, Mouse
         } catch (IndexOutOfBoundsException e0) {}
     }
 
-    public static void update() 
+    public static void update() //updates states of pressed / released button states , as they go trough one 
     {
         if (flagged) 
         {
@@ -144,7 +145,7 @@ public final class InputHandler extends KeyAdapter implements KeyListener, Mouse
 
             ResetKeys = new LinkedList<Integer>();
 
-            for (int i = 0; i < PressedMouse.length; i++) 
+            for (int i = 0; i < PressedMouse.length; i++) //tiny array so no real need to only change certain indexs
             {
                 PressedMouse[i] = false;
                 ReleasedMouse[i] = false;

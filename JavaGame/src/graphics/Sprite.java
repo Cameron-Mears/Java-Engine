@@ -13,7 +13,7 @@ public class Sprite
 
     public Sprite(BufferedImage images[], double FPS)
     {
-        animationSpeed = 1000000000/FPS;
+        animationSpeed = 1000/FPS;
         this.images = images;
         this.animationSpeed = animationSpeed;
         this.currentwait = animationSpeed;

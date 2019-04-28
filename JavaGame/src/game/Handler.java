@@ -7,6 +7,12 @@ import entities.Entity;
 import java.awt.Graphics2D;
 import java.util.Iterator;
 
+/*
+    This class handles all entities in the game, gameEntities is for entities that need to be update each game tick
+    render enities need to be re rendered each time render is called, just methods for adding/removing entities from the
+    handler
+*/
+
 public class Handler
 {
     private LinkedList<Entity> gameEntities = new LinkedList<Entity>();

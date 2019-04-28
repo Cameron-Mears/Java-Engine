@@ -7,14 +7,17 @@ import graphics.Sprite;
 
 public class SpriteHandler
 {
+    /*
+        Handles animation of sprites, pretty sraight foward
+    */
     public static LinkedList<Sprite> sprites = new LinkedList<Sprite>();
 
-    public void update(double deltaNS)
+    public void update(double deltaMS)
     {
         Iterator<Sprite> iterator = sprites.iterator();
         while (iterator.hasNext())
         {
-            iterator.next().update(deltaNS);
+            iterator.next().update(deltaMS);
         }
     }
 
