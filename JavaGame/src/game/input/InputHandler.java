@@ -62,7 +62,6 @@ public final class InputHandler extends KeyAdapter implements KeyListener, Mouse
     @Override
     public void mousePressed(MouseEvent e) {
         int index = e.getButton();
-
         try {
             if (!PressedMouse[index] && !DownMouse[index]) {
                 PressedMouse[index] = true;

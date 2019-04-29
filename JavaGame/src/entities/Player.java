@@ -8,8 +8,12 @@ import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.io.File;
 
+import javax.sound.sampled.Clip;
+
+import game.Audio;
 import game.Gamecore;
 import game.SpriteHandler;
+import game.input.MouseButtons;
 import graphics.ImageParser;
 import graphics.Sprite;
 import physics.PhysicsCal;
@@ -23,6 +27,7 @@ public class Player extends Entity
      */
     private static BufferedImage[] images = ImageParser.parseFolder(new File(System.getProperty("user.dir") + "\\JavaGame\\assets\\sprites\\player"));
     private static BufferedImage[] xflipImages = ImageParser.flipImages(images);
+    private Clip test;
 
     private Sprite sprite;
     private double angle = 0.1;
@@ -44,6 +49,7 @@ public class Player extends Entity
         if (keyDown(KeyEvent.VK_RIGHT)) angle += 0.1;
         if (keyDown(KeyEvent.VK_SPACE)) sprite.setImages(images);
         if (keyDown('W')) sprite.setImages(xflipImages);
+        if (mousePressed(MouseButtons.LEFT)) Audio.parseSound(new File(System.getProperty("user.dir") + "\\JavaGame\\assets\\sounds\\testing\\test.wav")).start();
         vec = vecUpdate(deltaSEC(), vec);
 
     }

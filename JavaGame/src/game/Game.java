@@ -109,8 +109,8 @@ public final class Game extends Thread implements Runnable
                     deltaMS = newTimeMS - initTime;
                     initTime = newTimeMS;
                     spriteHandler.update(deltaMS);
-                    InputHandler.update();
                     tick();
+                    InputHandler.update();
                     ticks++;
                     deltaTick--;
                 }
