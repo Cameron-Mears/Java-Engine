@@ -28,8 +28,8 @@ public class LevelConstructor implements Functions
     {
         level = new Level();
         
-        int xCells = Game.windowWidth/blockTexture.getWidth();
-        int yCells = Game.windowWidth / blockTexture.getHeight();
+        int xCells = Game.windowWidth/blockTexture.getWidth()/2;
+        int yCells = Game.windowWidth / blockTexture.getHeight()/2;
 
         level.grid = new Block[xCells][yCells];
 
@@ -46,10 +46,8 @@ public class LevelConstructor implements Functions
         while (x > 0 && x < xCells - 1 && y > 0 && y < yCells - 1)
         {
             x += randint(-1, 1);
-            System.out.println(x);
             y += randint(-1, 1);
             level.grid[x][y] = null;
-            level.emptyCells.add(new Point(x, y));
         }
         return level;
 

@@ -41,7 +41,10 @@ public class Level
         {
             for (int yIndex = yStart; yIndex < grid[xIndex].length && yIndex < yEnd; yIndex++) 
             {
-                if (grid[xIndex][yIndex] == null) g.drawImage(background, xIndex * bgWidth, yIndex * bgHeight, null);
+                if (grid[xIndex][yIndex] == null)
+                {
+                    g.drawImage(background, xIndex * 32, yIndex * 32, null);
+                }
             }
         }
 

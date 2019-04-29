@@ -59,7 +59,6 @@ public final class Game extends Thread implements Runnable
         renderer.addMouseMotionListener(IH);
         renderer.addMouseListener(IH);
         renderer.addMouseWheelListener(IH);
-
         window.getWindow().setVisible(true);
         spriteHandler = new SpriteHandler(); 
         handler = new Handler();
@@ -68,7 +67,7 @@ public final class Game extends Thread implements Runnable
         handler.renderAdd(temp);
         levelConstructor = new LevelConstructor();
         level = levelConstructor.newLevel(level);
-
+        renderer.requestFocus();
     }
 
     
