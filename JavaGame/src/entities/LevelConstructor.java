@@ -1,9 +1,11 @@
 package entities;
 
+import java.awt.Point;
 import java.awt.image.BufferedImage;
 import java.io.File;
 
 import game.Functions;
+import game.Game;
 import game.Level;
 import gameobjects.Block;
 import graphics.ImageParser;
@@ -15,7 +17,7 @@ public class LevelConstructor implements Functions
 
     private Level level;
 
-    BufferedImage test = ImageParser.parseFolder(new File(System.getProperty("user.dir") + "\\JavaGame\\assets\\sprites\\sadad"))[0];
+    BufferedImage blockTexture = ImageParser.parseFolder(new File(System.getProperty("user.dir") + "\\JavaGame\\assets\\sprites\\sadad"))[0];
 
     public LevelConstructor()
     {
@@ -26,25 +28,28 @@ public class LevelConstructor implements Functions
     {
         level = new Level();
         
-        int cells = 25;
-        level.grid = new Block[cells][cells];
+        int xCells = Game.windowWidth/blockTexture.getWidth();
+        int yCells = Game.windowWidth / blockTexture.getHeight();
 
-        for (int index = 0; index < cells; index++) 
+        level.grid = new Block[xCells][yCells];
+
+        for (int xIndex = 0; xIndex < xCells; xIndex++) 
         {
-            for (int i = 0; i < cells; i++) 
+            for (int yIndex = 0; yIndex < level.grid[xIndex].length; yIndex++) 
             {
-                level.grid[index][i] = new Block(index, i, test);
+                level.grid[xIndex][yIndex] = new Block(xIndex, yIndex, blockTexture);
             }
         }
         int x = 1;
-        int y = (int)( Math.random() * cells);
-        y = clamp(y, 1, cells - 1);
-        while (x > 0 && x < cells - 1 && y > 0 && y < cells - 1)
+        int y = (int)( Math.random() * yCells);
+        y = clamp(y, 1, yCells - 1);
+        while (x > 0 && x < xCells - 1 && y > 0 && y < yCells - 1)
         {
             x += randint(-1, 1);
             System.out.println(x);
             y += randint(-1, 1);
             level.grid[x][y] = null;
+            level.emptyCells.add(new Point(x, y));
         }
         return level;
 

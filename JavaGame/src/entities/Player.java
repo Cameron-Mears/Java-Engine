@@ -39,6 +39,8 @@ public class Player extends Entity
     {
         if (keyDown('A')) vec.velX = -100;
         if (keyDown('D')) vec.velX = 100;
+        if (keyDown('S')) vec.velY = 100;
+        if (keyDown('W')) vec.velY = -100;
         if (keyDown(KeyEvent.VK_RIGHT)) angle += 0.1;
         if (keyDown(KeyEvent.VK_SPACE)) sprite.setImages(images);
         if (keyDown('W')) sprite.setImages(xflipImages);
@@ -50,13 +52,9 @@ public class Player extends Entity
     public void render(Graphics2D g)
     {
         BufferedImage image = sprite.currentFrame();
-        g.setColor(Color.WHITE);
-        g.fillRect(0, 0, 1000, 1000);
         AffineTransform af = new AffineTransform();
-        g.setColor(Color.RED);
         af.setToTranslation(vec.x, vec.y);
         af.rotate(angle, image.getWidth()/2, image.getHeight() / 2);
         g.drawImage(image, af, null);
-        g.fillRect((int) vec.x - 2 + image.getWidth() / 2, (int) vec.y + image.getHeight() / 2 - 2, 4, 4);
     }
 }
