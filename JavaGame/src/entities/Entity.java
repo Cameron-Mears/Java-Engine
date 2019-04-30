@@ -2,6 +2,7 @@ package entities;
 
 import java.awt.Graphics2D;
 
+import game.Functions;
 import game.Gamecore;
 import game.input.Input;
 import physics.PhysicsCal;
@@ -11,7 +12,7 @@ import physics.Vec2d;
     super class for entities.
 */
 
-public abstract class Entity implements Input, Gamecore, PhysicsCal
+public abstract class Entity implements Input, PhysicsCal, Functions
 {
     protected Vec2d vec;
     protected int mass;
@@ -21,6 +22,7 @@ public abstract class Entity implements Input, Gamecore, PhysicsCal
 
     protected double xScale;
     protected double yScale;
+
 
 
     public Entity(double x, double y)
@@ -43,5 +45,25 @@ public abstract class Entity implements Input, Gamecore, PhysicsCal
     public void render(Graphics2D g)
     {
         
+    }
+
+    public double getXScale()
+    {
+        return xScale;
+    }
+
+    public double getYScale() 
+    {
+        return yScale;
+    }
+
+    public int getWidth()
+    {
+        return width;
+    }
+
+    public int getHeight()
+    {
+        return height;
     }
 }

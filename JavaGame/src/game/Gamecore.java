@@ -5,6 +5,7 @@ import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 
+import gameobjects.Block;
 import graphics.Sprite;
 
 public interface Gamecore
@@ -33,5 +34,8 @@ public interface Gamecore
         Game.spriteHandler.add(spr);
     }
 
-
+    public default Block[][] getGrid()
+    {
+        return Game.level.grid;
+    }
 }

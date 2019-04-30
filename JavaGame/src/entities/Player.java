@@ -38,20 +38,25 @@ public class Player extends Entity
         super( x, y);
         sprite = new Sprite(xflipImages, 15);
         addSprite(sprite);
+        xScale = 0.5;
+        yScale = 0.5;
+
+        width = images[0].getWidth();
+        height = images[0].getHeight();
     }
 
     @Override
     public void tick()
     {
-        if (keyDown('A')) vec.velX += -1;
-        if (keyDown('D')) vec.velX += 1;
-        if (keyDown('S')) vec.velY += 1;
-        if (keyDown('W')) vec.velY += -1;
+        if (keyDown('A')) vec.velX = -100;
+        if (keyDown('D')) vec.velX = 100;
+        if (keyDown('S')) vec.velY = 100;
+        if (keyDown('W')) vec.velY = -100;
         if (keyDown(KeyEvent.VK_RIGHT)) angle += 0.1;
         if (keyDown(KeyEvent.VK_SPACE)) sprite.setImages(images);
         if (keyDown('W')) sprite.setImages(xflipImages);
         if (mousePressed(MouseButtons.LEFT)) Audio.parseSound(new File(System.getProperty("user.dir") + "\\JavaGame\\assets\\sounds\\testing\\test.wav")).start();
-        vec = vecUpdate(deltaSEC(), vec);
+        if (!checkCollision(getGrid(), this)) vecUpdate(deltaSEC(), vec);
 
     }
 
@@ -62,7 +67,7 @@ public class Player extends Entity
         AffineTransform af = new AffineTransform();
         af.setToTranslation(vec.x, vec.y);
         af.rotate(angle, image.getWidth()/2 * xScale, image.getHeight()/2 * yScale);
-        af.scale(0.5, 0.5);
+        af.scale(xScale, yScale);
         g.drawImage(image, af, null);
     }
 }

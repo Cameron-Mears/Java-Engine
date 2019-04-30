@@ -4,18 +4,34 @@ import entities.Entity;
 import gameobjects.Block;
 import physics.Vec2d;
 
-public interface Functions
+public interface Functions extends Gamecore
 {
 
     public default boolean checkCollision(Block[][] grid, Entity e)
     {
         Vec2d vec = e.getVec();
         
-        int yCheck = Math.floor((vec.x/32));
-    
-        
+        int yCheck, xCheck;
+        if (vec.velY > 0)
+        {
+            yCheck = (int) Math.ceil((vec.y + (vec.velY * deltaSEC()) - 32) / 32);
+        }
+        else
+        {
+            yCheck = (int) Math.floor(vec.y / 32);
+        }
 
-        return false;
+        if (vec.velX > 0) 
+        {
+            xCheck = (int) Math.ceil((vec.x - ((e.getWidth() / 3) * e.getXScale())) / 32);
+        } 
+        else 
+        {
+            xCheck = (int) Math.floor(vec.x  / 32);
+        }
+        xCheck = clamp(xCheck, 0, 13);
+        
+        return grid[xCheck][yCheck] != null;
     }
 
     public default double clamp(double val, double min, double max)
