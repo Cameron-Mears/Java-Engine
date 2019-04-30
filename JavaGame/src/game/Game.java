@@ -24,14 +24,14 @@ import graphics.Sprite;
 public final class Game extends Thread implements Runnable
 {
     private boolean running = true;
-    private final int FPS = 10000;
+    private final int FPS = 30;
     private final int TPS = 100;
     private final long SEC = 1000000000;
     private final long MILLI_SEC = 1000000;
     private static long deltaNS = 0;
     public static long deltaMS;
-    public static int windowHeight = 992;
-    public static int windowWidth = 1760;
+    public static int windowHeight = 992/2;
+    public static int windowWidth = 1760/2;
     public static Window window;
     public static GraphicsConfiguration graphicsConfig;
     public static ImageParser imageParser;
@@ -40,7 +40,7 @@ public final class Game extends Thread implements Runnable
     private Handler handler;
     private LevelConstructor levelConstructor;
     private Level level;
-    private boolean renderLevel = true;
+    public static boolean renderLevel = true;
 
     private Game()
     {
@@ -53,7 +53,7 @@ public final class Game extends Thread implements Runnable
         imageParser = new ImageParser();
         graphicsConfig = graphicsInit(graphicsConfig);
         InputHandler IH = new InputHandler();
-        window = new Window("te", windowWidth, windowHeight, false, ImageParser.parseFolder(new File(System.getProperty("user.dir") + "\\JavaGame\\assets\\sprites\\sadad"))[0]);
+        window = new Window("things and stuff", windowWidth, windowHeight, false, ImageParser.parseFolder(new File(System.getProperty("user.dir") + "\\JavaGame\\assets\\sprites\\sadad"))[0]);
         renderer = new Renderer(window);
         renderer.addKeyListener(IH);
         renderer.addMouseMotionListener(IH);

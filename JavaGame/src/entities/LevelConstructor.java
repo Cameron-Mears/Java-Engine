@@ -41,12 +41,26 @@ public class LevelConstructor implements Functions
         }
         int x = 1;
         int y = (int)( Math.random() * yCells);
-        y = clamp(y, 1, yCells - 1);
+        y = clamp(y, 2, yCells - 1);
         while (x > 0 && x < xCells - 1 && y > 0 && y < yCells - 1)
         {
             x += randint(-1, 1);
             y += randint(-1, 1);
+            if (y == yCells - 2) y--;
+            if (y == 1) y ++;
+            if (x == 1) x++;
+
             level.grid[x][y] = null;
+            try{
+                level.grid[x + 1][y] = null;
+                level.grid[x - 1][y] = null;
+                level.grid[x][y + 1] = null;
+                level.grid[x][y - 1] = null;
+            }
+            catch (ArrayIndexOutOfBoundsException e)
+            {
+                return level;
+            }
         }
         return level;
 

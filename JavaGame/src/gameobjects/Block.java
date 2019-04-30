@@ -29,4 +29,14 @@ public class Block
     {
         g.drawImage(texture, xPos * width, yPos * height, null);
     }
+
+    public int getWidth()
+    {
+        return width;
+    }
+
+    public int getHeight()
+    {
+        return height;
+    }
 }

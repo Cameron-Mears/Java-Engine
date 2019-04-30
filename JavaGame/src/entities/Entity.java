@@ -16,6 +16,13 @@ public abstract class Entity implements Input, Gamecore, PhysicsCal
     protected Vec2d vec;
     protected int mass;
 
+    protected int width = 0;
+    protected int height = 0;
+
+    protected double xScale;
+    protected double yScale;
+
+
     public Entity(double x, double y)
     {
         vec = new Vec2d();

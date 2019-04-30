@@ -1,7 +1,23 @@
 package game;
 
+import entities.Entity;
+import gameobjects.Block;
+import physics.Vec2d;
+
 public interface Functions
 {
+
+    public default boolean checkCollision(Block[][] grid, Entity e)
+    {
+        Vec2d vec = e.getVec();
+        
+        int yCheck = Math.floor((vec.x/32));
+    
+        
+
+        return false;
+    }
+
     public default double clamp(double val, double min, double max)
     {
         if (val > max) return max;
@@ -30,6 +46,8 @@ public interface Functions
         double temp = (Math.random() * (max - min)) + min;
         return temp;
     }
+
+    
 
     public default double toRadians(double angle)
     {
