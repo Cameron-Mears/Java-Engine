@@ -12,7 +12,7 @@ import physics.Vec2d;
     super class for entities.
 */
 
-public abstract class Entity implements Input, PhysicsCal, Functions
+public abstract class Entity implements Input, Gamecore, PhysicsCal, Functions
 {
     protected Vec2d vec;
     protected int mass;
@@ -22,7 +22,6 @@ public abstract class Entity implements Input, PhysicsCal, Functions
 
     protected double xScale;
     protected double yScale;
-
 
 
     public Entity(double x, double y)
@@ -37,26 +36,6 @@ public abstract class Entity implements Input, PhysicsCal, Functions
         return vec;
     }
 
-    public void tick()
-    {
-
-    }
-
-    public void render(Graphics2D g)
-    {
-        
-    }
-
-    public double getXScale()
-    {
-        return xScale;
-    }
-
-    public double getYScale() 
-    {
-        return yScale;
-    }
-
     public int getWidth()
     {
         return width;
@@ -65,5 +44,26 @@ public abstract class Entity implements Input, PhysicsCal, Functions
     public int getHeight()
     {
         return height;
+    }
+
+    public double getXScale()
+    {
+        return xScale;
+    }
+
+    public double getYScale()
+    {
+        return yScale;
+    }
+
+
+    public void tick()
+    {
+
+    }
+
+    public void render(Graphics2D g)
+    {
+        
     }
 }

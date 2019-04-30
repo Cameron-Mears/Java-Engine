@@ -68,6 +68,7 @@ public final class Game extends Thread implements Runnable
         levelConstructor = new LevelConstructor();
         level = levelConstructor.newLevel(level);
         renderer.requestFocus();
+        window.getWindow().requestFocus();
     }
 
     

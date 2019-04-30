@@ -7,14 +7,15 @@ public interface PhysicsCal
 {
     default Vec2d vecUpdate(double deltaS, Vec2d vec)
     {
-        vec.x += (vec.velX * deltaS);
-        vec.y += (vec.velY * deltaS);
 
-        vec.x += (vec.acelX * deltaS * deltaS)/2;
-        vec.y += (vec.acelY * deltaS * deltaS)/2;
+        double velX0 = vec.velX;
+        double velY0 = vec.velY;
 
         vec.velX += (vec.acelX * deltaS);
         vec.velY += (vec.acelY * deltaS);
+
+        vec.x += ((vec.velX + velX0)/2) * deltaS;
+        vec.y += ((vec.velY + velY0)/2) * deltaS;
 
         return vec;
     }
