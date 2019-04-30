@@ -48,12 +48,12 @@ public class Player extends Entity
     @Override
     public void tick()
     {
-        if (keyDown('A')) vec.x -= 1;
-        if (keyDown('D')) vec.x += 1;
+        if (keyDown('A')) if (!checkCollision(Game.level.grid, this, vec.x - 1, vec.y -1)) vec.x += -1;
+        if (keyDown('D')) if (!checkCollision(Game.level.grid, this, vec.x + 1, vec.y)) vec.x += 1;
         if (keyDown(KeyEvent.VK_RIGHT)) angle += 0.1;
         if (keyDown(KeyEvent.VK_SPACE)) sprite.setImages(images);
         if (keyDown('W')) if (!checkCollision(Game.level.grid, this, vec.x, vec.y -1)) vec.y += -1;
-        if (keyDown('S')) vec.y += 1;
+        if (keyDown('S')) if (!checkCollision(Game.level.grid, this, vec.x, vec.y + 1)) vec.y += 1;
         if (mousePressed(MouseButtons.LEFT)) Audio.parseSound(new File(System.getProperty("user.dir") + "\\JavaGame\\assets\\sounds\\testing\\test.wav")).start();
         vecUpdate(deltaSEC(), vec);
 
