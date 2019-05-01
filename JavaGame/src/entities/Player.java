@@ -38,8 +38,8 @@ public class Player extends Entity
         super( x, y);
         sprite = new Sprite(xflipImages, 15);
         addSprite(sprite);
-        xScale = 0.5;
-        yScale = 0.5;
+        xScale = 0.1;
+        yScale = 0.1;
 
         width = images[0].getWidth();
         height = images[0].getHeight();
