@@ -2,7 +2,9 @@ package game;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.util.Iterator;
 
+import entities.Entities;
 import entities.Entity;
 import gameobjects.Block;
 import physics.Vec2d;
@@ -22,7 +24,60 @@ public interface Functions extends Gamecore
         return x;
     }
 
-    public default boolean checkCollision(Block[][] grid, Entity e, double x, double y)
+    public default boolean checkEntityCollision(Entity entityA, Entity entityB)
+    {
+        Vec2d vecA = entityA.getVec();
+        Vec2d vecB = entityB.getVec();
+        if 
+            (
+                vecA.x < vecB.x + (entityB.getWidth() * entityB.getXScale())
+                &&
+                vecA.x + (entityA.getWidth() * entityA.getXScale()) > vecB.x
+                &&
+                vecA.x < vecB.x + (entityB.getHeight() * entityB.getYScale())
+                &&
+                vecA.y + (entityA.getHeight() * entityA.getXScale()) > vecB.y
+            )
+            {
+                return true;
+            }
+        return false;
+    }
+
+    public default boolean checkEntityCollision(Entities type, Entity entityB)
+    {
+        Iterator<Entity> iterator = Game.handler.getTickEntities().iterator();
+
+        while (iterator.hasNext())
+        {
+            Entity temp = iterator.next();
+            if (temp.getType() == type)
+            {
+                if (checkEntityCollision(temp, entityB)) return true;
+            }
+        }
+
+        return false;
+       
+    }
+
+    public default Entity getEntityCollision(Entities type, Entity entityB)
+    {
+        Iterator<Entity> iterator = Game.handler.getTickEntities().iterator();
+
+        while (iterator.hasNext())
+        {
+            Entity temp = iterator.next();
+            if (temp.getType() == type)
+            {
+                if (checkEntityCollision(temp, entityB)) return temp;
+            }
+        }
+
+        return null;
+    }
+
+    public default boolean checkGridCollision(Block[][] grid, Entity e, double x, double y)
     {
         /*
         find the blocks around the entity
@@ -34,8 +89,8 @@ public interface Functions extends Gamecore
         xStart = (int)((x/32) - 2);
         yStart = (int)((y/32) - 2);
 
-        int yDist = Math.floorDiv(height, 64) + 5;
-        int xDist = Math.floorDiv(width, 64) + 5;
+        int yDist = Math.floorDiv(height, 32) + 3;
+        int xDist = Math.floorDiv(width, 32) + 3;
         xStart = clamp(xStart, 0, grid.length - 1);
         yStart = clamp(yStart, 0, grid[0].length - 1);
         for (int xIndex = xStart; xIndex < grid.length && (xIndex < xDist + xStart); xIndex ++)
@@ -46,10 +101,21 @@ public interface Functions extends Gamecore
                 {
                     int blockXPos = xIndex * 32;
                     int blockYPos = yIndex * 32;
-                    if (x < blockXPos && y < blockYPos) if ((Math.abs(((xIndex * 32)) - x) < (e.getWidth() * e.getXScale())) && (Math.abs(((yIndex * 32)) - y) < (e.getHeight() * e.getYScale()))) return true;
-                    if (x > blockXPos && y < blockXPos) if ((Math.abs(((xIndex * 32)) - x) < 32) && (Math.abs(((yIndex * 32)) - y) < (e.getHeight() * e.getYScale()))) return true;
-                    if (x > blockXPos && y > blockXPos) if ((Math.abs(((xIndex * 32)) - x) < 32) && (Math.abs(((yIndex * 32)) - y) < (32))) return true;
-                    if (x < blockXPos && y < blockXPos) if ((Math.abs(((xIndex * 32)) - x) < (e.getWidth() * e.getXScale())) && (Math.abs(((yIndex * 32)) - y) < 32)) return true;
+
+                    if 
+                    (
+                        blockXPos < x + (e.getWidth() * e.getXScale())
+                        &&
+                        blockXPos + 32 > x
+                        &&
+                        blockYPos < y + (e.getHeight() * e.getYScale())
+                        &&
+                        blockYPos + 32 > y
+                    )
+                    {
+                        Game.renderLevel = true;
+                        return true;
+                    }
                 }
             }
         }

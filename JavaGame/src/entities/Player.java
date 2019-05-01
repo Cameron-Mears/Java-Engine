@@ -43,17 +43,19 @@ public class Player extends Entity
 
         width = images[0].getWidth();
         height = images[0].getHeight();
+
+        type = Entities.Player;
     }
 
     @Override
     public void tick()
     {
-        if (keyDown('A')) if (!checkCollision(Game.level.grid, this, vec.x - 1, vec.y -1)) vec.x += -1;
-        if (keyDown('D')) if (!checkCollision(Game.level.grid, this, vec.x + 1, vec.y)) vec.x += 1;
+        if (keyDown('A')) if (!checkGridCollision(Game.level.grid, this, vec.x - 1, vec.y)) vec.x += -1;
+        if (keyDown('D')) if (!checkGridCollision(Game.level.grid, this, vec.x + 1, vec.y)) vec.x += 1;
         if (keyDown(KeyEvent.VK_RIGHT)) angle += 0.1;
         if (keyDown(KeyEvent.VK_SPACE)) sprite.setImages(images);
-        if (keyDown('W')) if (!checkCollision(Game.level.grid, this, vec.x, vec.y -1)) vec.y += -1;
-        if (keyDown('S')) if (!checkCollision(Game.level.grid, this, vec.x, vec.y + 1)) vec.y += 1;
+        if (keyDown('W')) if (!checkGridCollision(Game.level.grid, this, vec.x, vec.y -1)) vec.y += -1;
+        if (keyDown('S')) if (!checkGridCollision(Game.level.grid, this, vec.x, vec.y + 1)) vec.y += 1;
         if (mousePressed(MouseButtons.LEFT)) Audio.parseSound(new File(System.getProperty("user.dir") + "\\JavaGame\\assets\\sounds\\testing\\test.wav")).start();
         vecUpdate(deltaSEC(), vec);
 
@@ -64,7 +66,6 @@ public class Player extends Entity
     {
         BufferedImage image = sprite.currentFrame();
         AffineTransform af = new AffineTransform();
-        System.out.println(checkCollision(Game.level.grid, this, vec.x, vec.y));
         af.setToTranslation(vec.x, vec.y);
         af.rotate(angle, image.getWidth()/2 * xScale, image.getHeight()/2 * yScale);
         af.scale(xScale, yScale);

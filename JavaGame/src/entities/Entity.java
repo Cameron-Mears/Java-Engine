@@ -23,6 +23,8 @@ public abstract class Entity implements Input, Gamecore, PhysicsCal, Functions
     protected double xScale;
     protected double yScale;
 
+    protected Entities type;
+
 
     public Entity(double x, double y)
     {
@@ -65,5 +67,10 @@ public abstract class Entity implements Input, Gamecore, PhysicsCal, Functions
     public void render(Graphics2D g)
     {
         
+    }
+
+    public Entities getType()
+    {
+        return type;
     }
 }

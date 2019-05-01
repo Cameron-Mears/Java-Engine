@@ -37,7 +37,7 @@ public final class Game extends Thread implements Runnable
     public static ImageParser imageParser;
     public static Renderer renderer;
     public static SpriteHandler spriteHandler;
-    private Handler handler;
+    public static Handler handler;
     private LevelConstructor levelConstructor;
     public static Level level;
     public static boolean renderLevel = true;

@@ -59,4 +59,9 @@ public class Handler
     {
         renderEntities.remove(entity);
     }
+
+    public LinkedList<Entity> getTickEntities()
+    {
+        return gameEntities;
+    }
 }
