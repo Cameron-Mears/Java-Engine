@@ -84,15 +84,14 @@ public interface Functions extends Gamecore
         find the blocks around the entity
         */
 
-        int xStart, yStart;
-        double width, height;
-        width = e.getWidth() * e.getXScale();
-        height = e.getHeight() * e.getYScale();
+        int xStart, yStart, width, height;
+        width = e.getWidth();
+        height = e.getHeight();
         xStart = (int)((x/32) - 2);
         yStart = (int)((y/32) - 2);
 
-        int yDist = Math.floorDiv((int)height, 32) + 3;
-        int xDist = Math.floorDiv((int)width, 32) + 3;
+        int yDist = Math.floorDiv(height, 32) + 3;
+        int xDist = Math.floorDiv(width, 32) + 3;
         xStart = clamp(xStart, 0, grid.length - 1);
         yStart = clamp(yStart, 0, grid[0].length - 1);
         for (int xIndex = xStart; xIndex < grid.length && (xIndex < xDist + xStart); xIndex ++)
