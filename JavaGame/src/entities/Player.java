@@ -28,7 +28,7 @@ public class Player extends Entity
      */
     private static BufferedImage[] images = ImageParser.parseFolder(new File(System.getProperty("user.dir") + "\\JavaGame\\assets\\sprites\\player"));
     private static BufferedImage[] xflipImages = ImageParser.flipImages(images);
-    private Clip test;
+    private Clip test = Audio.parseSound(new File(System.getProperty("user.dir") + "\\JavaGame\\assets\\sounds\\testing\\test.wav"));
 
     private Sprite sprite;
     private double angle = 0.1;
@@ -50,14 +50,25 @@ public class Player extends Entity
     @Override
     public void tick()
     {
-        if (keyDown('A')) if (!checkGridCollision(Game.level.grid, this, vec.x - 1, vec.y)) vec.x += -1;
-        if (keyDown('D')) if (!checkGridCollision(Game.level.grid, this, vec.x + 1, vec.y)) vec.x += 1;
-        if (keyDown(KeyEvent.VK_RIGHT)) angle += 0.1;
+        if (keyDown('A')) vec.acelX += -100;
+        if (keyDown('D')) vec.acelX += 100;
+        if (keyDown(KeyEvent.VK_RIGHT)) vec.direction += 1;
         if (keyDown(KeyEvent.VK_SPACE)) sprite.setImages(images);
-        if (keyDown('W')) if (!checkGridCollision(Game.level.grid, this, vec.x, vec.y -1)) vec.y += -1;
-        if (keyDown('S')) if (!checkGridCollision(Game.level.grid, this, vec.x, vec.y + 1)) vec.y += 1;
-        if (mousePressed(MouseButtons.LEFT)) Audio.parseSound(new File(System.getProperty("user.dir") + "\\JavaGame\\assets\\sounds\\testing\\test.wav")).start();
-        vecUpdate(deltaSEC(), vec);
+        if (keyDown('W')) vec.acelY += -100;
+        if (keyDown('S')) vec.acelY += 100;
+        if (mousePressed(MouseButtons.LEFT)) 
+        {
+            Audio.playClip(test);
+        }
+        if (!checkGridCollision(Game.level.grid, this, nextX(vec), nextY(vec))) vecUpdate(deltaSEC(), vec);
+        else
+        {
+            vec.velX = 0;
+            vec.acelX = 0;
+            vec.acelY = 0;
+            vec.velY = 0;
+        }
+        getDirection(vec);
 
     }
 
@@ -67,7 +78,8 @@ public class Player extends Entity
         BufferedImage image = sprite.currentFrame();
         AffineTransform af = new AffineTransform();
         af.setToTranslation(vec.x, vec.y);
-        af.rotate(angle, image.getWidth()/2 * xScale, image.getHeight()/2 * yScale);
+        System.out.println(vec.direction);
+        af.rotate(toRadians(vec.direction), image.getWidth()/2 * xScale, image.getHeight()/2 * yScale);
         af.scale(xScale, yScale);
         g.drawImage(image, af, null);
     }

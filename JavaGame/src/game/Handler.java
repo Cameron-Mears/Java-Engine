@@ -64,4 +64,9 @@ public class Handler
     {
         return gameEntities;
     }
+
+    public LinkedList<Entity> getRenderEntities()
+    {
+        return renderEntities;
+    }
 }

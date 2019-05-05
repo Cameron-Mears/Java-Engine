@@ -14,4 +14,6 @@ public class Vec2d
     public double acelX = 0;
     public double acelY = 0;
 
+    public double direction;
+
 }

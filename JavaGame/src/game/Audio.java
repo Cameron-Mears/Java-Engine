@@ -28,4 +28,17 @@ public class Audio
 
         return clip;
     }
+
+    public static Clip reset(Clip c)
+    {
+        c.stop();
+        c.setMicrosecondPosition(0L);
+        return c;
+    }
+
+    public static void playClip(Clip c)
+    {
+        reset(c);
+        c.start();
+    }
 }

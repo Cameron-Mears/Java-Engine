@@ -14,13 +14,13 @@ public interface Functions extends Gamecore
 
     public default double nextX(Vec2d vec)
     {
-        double x = (vec.x + (vec.velX * deltaSEC()) + (vec.acelX *deltaSEC() * deltaSEC()/2));
+        double x = (vec.x + (vec.velX * deltaSEC()) + (vec.acelX *deltaSEC() * deltaSEC())/2);
         return x;
     }
 
     public default double nextY(Vec2d vec)
     {
-        double x = (vec.y + (vec.velY * deltaSEC()) + (vec.acelY *deltaSEC() * deltaSEC()/2));
+        double x = (vec.y + (vec.velY * deltaSEC()) + (vec.acelY *deltaSEC() * deltaSEC())/2);
         return x;
     }
 
@@ -195,6 +195,49 @@ public interface Functions extends Gamecore
     public default double toDegrees(double angle)
     {
         return (angle * (180 / Math.PI));
+    }
+
+    public default Vec2d getDirection(Vec2d vec)
+    {
+        if (vec.velX == 0)
+        {
+            vec.direction = (vec.velY > 0)? 180:0;
+            return vec;
+        }
+
+        if (vec.velY == 0)
+        {
+            vec.direction = (vec.velX < 0)? 270:90;
+            return vec;
+        }
+
+        double temp = toDegrees(Math.abs(Math.atan(vec.velY/vec.velX)));
+        if (vec.velY < 0 && vec.velX > 0)
+        {
+            vec.direction = temp;
+            return vec;
+        }
+
+        if (vec.velY < 0 && vec.velX < 0) 
+        {
+            temp = 360 - temp;
+            vec.direction = temp;
+            return vec;
+        }
+
+        if (vec.velY > 0 && vec.velX > 0)
+        {
+            temp = 180 - temp;
+            vec.direction = temp;
+            return vec;
+        }
+
+        else
+        {
+            temp = 180 + temp;
+            vec.direction = temp;
+            return vec;
+        }
     }
 
     
