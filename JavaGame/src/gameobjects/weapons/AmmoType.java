@@ -1,6 +1,6 @@
 package gameobjects.weapons;
 
-public enum AmmoTypes
+public enum AmmoType
 {
     ASSUALT_RIFLE,
     SHOTGUN,

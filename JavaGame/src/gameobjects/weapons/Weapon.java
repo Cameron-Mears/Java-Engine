@@ -3,15 +3,16 @@ package gameobjects.weapons;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
+import game.Functions;
 import game.Game;
 import game.Gamecore;
 import graphics.Sprite;
 
-public abstract class Weapon
+public abstract class Weapon implements Functions
 {
     protected static BufferedImage[] images;
     protected double damage;
-    protected AmmoTypes ammoType;
+    protected AmmoType ammoType;
     protected int currentAmmo;
     protected int magSize;
     protected double fireRate;
@@ -21,17 +22,35 @@ public abstract class Weapon
     protected double reloadSpeed;
     protected Sprite sprite;
 
-    public Weapon(double fireRate)
+    public Weapon(double fireRate, double accuarcy, double reloadSpeed, double damage, int magSize, AmmoType ammoType)
     {
         this.fireRate = fireRate;
         this.fireDelay = 1000/fireRate;
         this.fireWait = fireDelay;
     }
-    public AmmoTypes getAmmoType()
+    public AmmoType getAmmoType()
     {
         return ammoType;
     }
 
+    public double getAccuarcy()
+    {
+        return accuarcy;
+    }
+
+    public double setAccuarcy(double accuarcy)
+    {
+        return clamp(accuarcy, 1, 100);
+    }
+
+    protected double getDirection()
+    {
+        double mouseDirection = 0;
+        double offSet = (100/accuarcy) - 1;
+        return mouseDirection + rand(-offSet, offSet);
+    }
+
+    
 
     public double getDamage() 
     {
@@ -55,8 +74,8 @@ public abstract class Weapon
 
     public boolean canFire()
     {
-        if(fireWait <= 0) return true;
         fireWait -= Game.deltaMS;
+        if (fireWait <= 0) return true;
         return false;        
     }
 
