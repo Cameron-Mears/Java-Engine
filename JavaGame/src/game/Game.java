@@ -64,7 +64,7 @@ public final class Game extends Thread implements Runnable
         handler = new Handler();
         Player temp = new Player(100, 100);
         handler.tickAdd(temp);
-        handler.renderAdd(temp);
+        renderer.add(0, temp);
         levelConstructor = new LevelConstructor();
         level = levelConstructor.newLevel(level);
         renderer.requestFocus();
@@ -143,7 +143,7 @@ public final class Game extends Thread implements Runnable
             renderLevel = false;
         }
         level.renderBack(g, 0, 0, 1000, 1000);
-        handler.render(g);
+        renderer.render(g);
         renderer.show();
     }
 

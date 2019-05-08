@@ -6,6 +6,7 @@ import java.awt.image.BufferedImage;
 import game.Functions;
 import game.Game;
 import game.Gamecore;
+import game.Timer;
 import graphics.Sprite;
 
 public abstract class Weapon implements Functions
@@ -21,6 +22,7 @@ public abstract class Weapon implements Functions
     protected double accuarcy;
     protected double reloadSpeed;
     protected Sprite sprite;
+    protected Timer reloadTimer;
 
     public Weapon(double fireRate, double accuarcy, double reloadSpeed, double damage, int magSize, AmmoType ammoType)
     {
@@ -50,7 +52,10 @@ public abstract class Weapon implements Functions
         return mouseDirection + rand(-offSet, offSet);
     }
 
-    
+    protected void reload()
+    {
+        fireWait = reloadSpeed;
+    }    
 
     public double getDamage() 
     {

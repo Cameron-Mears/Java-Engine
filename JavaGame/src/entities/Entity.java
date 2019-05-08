@@ -2,6 +2,7 @@ package entities;
 
 import java.awt.Graphics2D;
 
+import entities.entitylist.EntityNode;
 import game.Functions;
 import game.Gamecore;
 import game.input.Input;
@@ -16,6 +17,8 @@ public abstract class Entity implements Input, Gamecore, PhysicsCal, Functions
 {
     protected Vec2d vec;
     protected int mass;
+
+    protected EntityNode node;
 
     protected int width = 0;
     protected int height = 0;
@@ -36,6 +39,11 @@ public abstract class Entity implements Input, Gamecore, PhysicsCal, Functions
     public Vec2d getVec()
     {
         return vec;
+    }
+
+    public EntityNode getNode()
+    {
+        return node;
     }
 
     public int getWidth()
@@ -73,4 +81,5 @@ public abstract class Entity implements Input, Gamecore, PhysicsCal, Functions
     {
         return type;
     }
+
 }

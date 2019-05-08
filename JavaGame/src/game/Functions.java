@@ -104,7 +104,7 @@ public interface Functions extends Gamecore
                     int blockYPos = yIndex * 32;
 
                     /*
-                    Check for overlapping bounding boxes that would indicate a collision
+                    Check for overlapMath.PIng bounding boxes that would indicate a collision
                     */
                     if 
                     (
@@ -238,6 +238,35 @@ public interface Functions extends Gamecore
             vec.direction = temp;
             return vec;
         }
+    }
+
+    /*
+    trig functions use taylor series, functions approximate function angle is mod pi as function only
+    accutate to cos(pi) which is 1, -1, cos min.
+    */
+    public default double cos(double a)
+    {
+        if (a % Math.PI == 0)
+        {
+            a = a/Math.PI % 2;
+            if (a == 1) return -1;
+            return 1;
+        }
+        double angle = a % Math.PI;
+        return (1 - Math.pow(angle, 2)/2 + Math.pow(angle, 4)/24 - Math.pow(angle, 6)/720 + Math.pow(angle, 8)/40320 - Math.pow(angle, 10)/3628800);
+    }
+
+    public default double sin(double a)
+    {
+        if (a % Math.PI == 0) return 0;
+        double angle = a % Math.PI;
+        return (angle - Math.pow(angle, 3)/6 + Math.pow(angle, 5)/120 - Math.pow(angle, 7)/5040 + Math.pow(angle, 9)/362880 - Math.pow(angle, 11)/39916800);
+    }
+
+    public default double tan(double a)
+    {
+        //tan(theta) = sin(theta)/cos(theta)
+        return sin(a)/cos(a);
     }
 
     

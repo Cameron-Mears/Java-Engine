@@ -17,6 +17,18 @@ public class Handler
 {
     private LinkedList<Entity> gameEntities = new LinkedList<Entity>();
     private LinkedList<Entity> renderEntities = new LinkedList<Entity>();
+    private LinkedList<Timer> timers = new LinkedList<Timer>();
+
+    public void updateTimers()
+    {
+        Iterator<Timer> iterator = timers.iterator();
+
+        while (iterator.hasNext())
+        {
+            Timer temp = iterator.next();
+            temp.update(Game.deltaMS);
+        }
+    }
 
     public void tick()
     {
@@ -39,7 +51,15 @@ public class Handler
             temp.render(g);
         }
     }
-    
+    public void removeTimer(Timer t)
+    {
+        timers.remove(t);
+    }
+
+    public void addTimer(Timer t)
+    {
+        timers.add(t);
+    }
     public void tickAdd(Entity entity)
     {
         gameEntities.add(entity);
