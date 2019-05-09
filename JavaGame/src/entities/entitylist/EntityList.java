@@ -18,15 +18,18 @@ public class EntityList
               {
                      entity.getNode().last = last;
                      last.next = entity.getNode();
+                     last.entity = entity;
               }
               else
               {
                      System.out.println("hi");
                      if (first == null) first = entity.getNode();
-                     System.out.println(first);
+                     first.entity = entity;
                      last = entity.getNode();
-                     return;
               }
+
+              System.out.println(first.entity);
+
        }
 
        public EntityNode getFirst()

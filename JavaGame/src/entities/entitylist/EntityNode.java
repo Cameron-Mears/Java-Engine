@@ -8,9 +8,9 @@ public class EntityNode
     public EntityNode next;
     public Entity entity;
 
-    public EntityNode removeNode()
+    public EntityNode freeNode()
     {
-        last.next = next;
+        if (last != null) last.next = next;
         return this;
     }
 }

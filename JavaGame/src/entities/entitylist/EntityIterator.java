@@ -13,7 +13,7 @@ public class EntityIterator
 
     public boolean hasNext()
     {
-        return current.next != null;
+        return current != null;
     }
 
     public Entity getNext()

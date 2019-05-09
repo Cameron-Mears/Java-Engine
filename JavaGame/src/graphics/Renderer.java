@@ -9,6 +9,7 @@ import java.util.LinkedList;
 import entities.Entity;
 import entities.entitylist.EntityIterator;
 import entities.entitylist.EntityList;
+import entities.entitylist.EntityNode;
 import game.Functions;
 import game.Window;
 
@@ -44,29 +45,31 @@ public class Renderer extends Canvas implements Functions
 
     public void render(Graphics2D g)
     {
-        for (EntityList list : depths)
-        {
-            EntityIterator iterator = new EntityIterator(list);
-            if (list.getFirst() == null) continue;
-            do
-            {
-                System.out.println("sd");
-                iterator.getNext().render(g);
-            }
-            while (iterator.hasNext());
-        }
+       for (EntityList list : depths)
+       {
+           EntityIterator iterator = new EntityIterator(list);
+           
+           while (iterator.hasNext())
+           {
+               iterator.getNext().render(g);
+           }
+       }
     }
 
     public void add(int depth, Entity entity)
     {
         depth = clamp(depth, 0, layers - 1);
         depths[depth].add(entity);
-        System.out.println(depths[depth].getFirst());
+        System.out.println(depths[depth].getFirst().entity);
     }
 
     public void setDepth(int depth, Entity entity)
     {
-        entity.getNode().removeNode();
+        /*
+        "Free", the node from the list at that depth,
+        then append it to the new list at the desired depth.
+        */
+        entity.getNode().freeNode();
         depths[depth].add(entity);
     }
 

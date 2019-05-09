@@ -20,7 +20,7 @@ import graphics.Sprite;
 import physics.PhysicsCal;
 import physics.Vec2d;
 
-public class Player extends Entity
+public class Player2 extends Entity
 {
     /*
      * images for sprites are contained in static folders to reduce RAM usage and
@@ -33,7 +33,7 @@ public class Player extends Entity
     private Sprite sprite;
     private double angle = 0.1;
 
-    public Player(double x, double y)
+    public Player2(double x, double y)
     {
         super( x, y);
         sprite = new Sprite(xflipImages, 15);
@@ -50,12 +50,12 @@ public class Player extends Entity
     @Override
     public void tick()
     {
-        if (keyDown('A')) vec.x += -1;
-        if (keyDown('D')) vec.x += 1;
+        if (keyDown(KeyEvent.VK_LEFT)) vec.x += -1;
+        if (keyDown(KeyEvent.VK_RIGHT)) vec.x += 1;
         if (keyDown(KeyEvent.VK_RIGHT)) vec.direction += 1;
         if (keyDown(KeyEvent.VK_SPACE)) sprite.setImages(images);
-        if (keyDown('W')) vec.y += -1;
-        if (keyDown('S')) vec.y += 1;
+        if (keyDown(KeyEvent.VK_UP)) vec.y += -1;
+        if (keyDown(KeyEvent.VK_DOWN)) vec.y += 1;
         if (mousePressed(MouseButtons.LEFT)) 
         {
             Audio.playClip(test);
@@ -81,6 +81,7 @@ public class Player extends Entity
         System.out.println(vec.direction);
         af.rotate(toRadians(vec.direction), image.getWidth()/2 * xScale, image.getHeight()/2 * yScale);
         af.scale(xScale, yScale);
-        g.drawImage(image, af, null);
+        g.setColor(Color.blue);
+        g.fillRect((int) vec.x, (int) vec.y, 32, 32);
     }
 }

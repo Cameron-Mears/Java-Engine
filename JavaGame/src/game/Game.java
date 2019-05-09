@@ -14,6 +14,7 @@ import java.io.File;
 
 import entities.LevelConstructor;
 import entities.Player;
+import entities.Player2;
 import game.input.InputHandler;
 import gameobjects.Block;
 import graphics.ImageParser;
@@ -63,8 +64,11 @@ public final class Game extends Thread implements Runnable
         spriteHandler = new SpriteHandler(); 
         handler = new Handler();
         Player temp = new Player(100, 100);
+        Player2 temp2 = new Player2(150, 150);
         handler.tickAdd(temp);
+        handler.tickAdd(temp2);
         renderer.add(0, temp);
+        renderer.add(10, temp2);
         levelConstructor = new LevelConstructor();
         level = levelConstructor.newLevel(level);
         renderer.requestFocus();
