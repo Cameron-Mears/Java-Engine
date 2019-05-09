@@ -59,8 +59,8 @@ public class Renderer extends Canvas implements Functions
     public void add(int depth, Entity entity)
     {
         depth = clamp(depth, 0, layers - 1);
+        entity.getNode().list = depths[depth];
         depths[depth].add(entity);
-        System.out.println(depths[depth].getFirst().entity);
     }
 
     public void setDepth(int depth, Entity entity)
@@ -69,6 +69,7 @@ public class Renderer extends Canvas implements Functions
         "Free", the node from the list at that depth,
         then append it to the new list at the desired depth.
         */
+        depth = clamp(depth, 0, layers - 1);
         entity.getNode().freeNode();
         depths[depth].add(entity);
     }

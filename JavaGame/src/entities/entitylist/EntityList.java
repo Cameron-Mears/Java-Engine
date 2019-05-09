@@ -4,8 +4,8 @@ import entities.Entity;
 
 public class EntityList
 {
-       private EntityNode first = null;
-       private EntityNode last = null;
+       public EntityNode first = null;
+       public EntityNode last = null;
 
        public EntityList()
        {
@@ -19,6 +19,7 @@ public class EntityList
                      entity.getNode().last = last;
                      last.next = entity.getNode();
                      last.entity = entity;
+                     last = entity.getNode();
               }
               else
               {
@@ -27,9 +28,6 @@ public class EntityList
                      first.entity = entity;
                      last = entity.getNode();
               }
-
-              System.out.println(first.entity);
-
        }
 
        public EntityNode getFirst()

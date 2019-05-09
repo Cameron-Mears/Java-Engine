@@ -56,6 +56,8 @@ public class Player2 extends Entity
         if (keyDown(KeyEvent.VK_SPACE)) sprite.setImages(images);
         if (keyDown(KeyEvent.VK_UP)) vec.y += -1;
         if (keyDown(KeyEvent.VK_DOWN)) vec.y += 1;
+        if (keyDown('M')) Game.renderer.setDepth(10, this);
+        if (keyDown('N')) Game.renderer.setDepth(0, this);
         if (mousePressed(MouseButtons.LEFT)) 
         {
             Audio.playClip(test);
@@ -78,7 +80,6 @@ public class Player2 extends Entity
         BufferedImage image = sprite.currentFrame();
         AffineTransform af = new AffineTransform();
         af.setToTranslation(vec.x, vec.y);
-        System.out.println(vec.direction);
         af.rotate(toRadians(vec.direction), image.getWidth()/2 * xScale, image.getHeight()/2 * yScale);
         af.scale(xScale, yScale);
         g.setColor(Color.blue);

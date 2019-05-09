@@ -78,7 +78,6 @@ public class Player extends Entity
         BufferedImage image = sprite.currentFrame();
         AffineTransform af = new AffineTransform();
         af.setToTranslation(vec.x, vec.y);
-        System.out.println(vec.direction);
         af.rotate(toRadians(vec.direction), image.getWidth()/2 * xScale, image.getHeight()/2 * yScale);
         af.scale(xScale, yScale);
         g.drawImage(image, af, null);
