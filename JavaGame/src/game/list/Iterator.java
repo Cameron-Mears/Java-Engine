@@ -1,15 +1,15 @@
-package entities.entitylist;
+package game.list;
 
 import entities.Entity;
 
-public class EntityIterator
+public class Iterator<Type>
 {
     /*
     List iterator for the entity list
     */
-    private EntityNode current;
+    private Node<Type> current;
 
-    public EntityIterator(EntityList list)
+    public Iterator(List<Type> list)
     {
         this.current = list.getFirst();
     }
@@ -19,9 +19,9 @@ public class EntityIterator
         return current != null;
     }
 
-    public Entity getNext()
+    public Type getNext()
     {
-        Entity temp = current.entity;
+        Type temp = current.data;
         current = current.next;
         return temp;
     }

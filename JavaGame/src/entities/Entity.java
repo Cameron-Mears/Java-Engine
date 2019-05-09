@@ -2,10 +2,10 @@ package entities;
 
 import java.awt.Graphics2D;
 
-import entities.entitylist.EntityNode;
 import game.Functions;
 import game.Gamecore;
 import game.input.Input;
+import game.list.Node;
 import physics.PhysicsCal;
 import physics.Vec2d;
 
@@ -18,7 +18,8 @@ public abstract class Entity implements Input, Gamecore, PhysicsCal, Functions
     protected Vec2d vec;
     protected int mass;
 
-    protected EntityNode node;
+    protected Node<Entity> rendererNode; //holds the node used by the renderer
+    protected Node<Entity> handlerNode; //holds the node used by the handler
 
     protected int width = 0;
     protected int height = 0;
@@ -31,8 +32,8 @@ public abstract class Entity implements Input, Gamecore, PhysicsCal, Functions
 
     public Entity(double x, double y)
     {
-        node = new EntityNode();
-        node.entity = this;
+        rendererNode = new Node<Entity>(this);
+        handlerNode = new Node<Entity>(this);
         vec = new Vec2d();
         vec.x = x;
         vec.y = y;
@@ -43,9 +44,14 @@ public abstract class Entity implements Input, Gamecore, PhysicsCal, Functions
         return vec;
     }
 
-    public EntityNode getNode()
+    public Node<Entity> getRenderNode()
     {
-        return node;
+        return rendererNode;
+    }
+
+    public Node<Entity> getHandlerNode()
+    {
+        return handlerNode;
     }
 
     public int getWidth()

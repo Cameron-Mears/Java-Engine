@@ -4,12 +4,10 @@ import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferStrategy;
-import java.util.LinkedList;
+
 
 import entities.Entity;
-import entities.entitylist.EntityIterator;
-import entities.entitylist.EntityList;
-import entities.entitylist.EntityNode;
+import game.list.*;
 import game.Functions;
 import game.Window;
 
@@ -22,7 +20,7 @@ public class Renderer extends Canvas implements Functions
         and creates a drawable canvas.
         the number of layers is the depth range
     */
-    private EntityList[] depths = new EntityList[layers];    
+    private List<Entity>[] depths = new List[layers];    
     private BufferStrategy bs;
 
     public Renderer(Window window)
@@ -31,7 +29,7 @@ public class Renderer extends Canvas implements Functions
         window.getWindow().add(this);
         for (int index = 0; index < depths.length; index++)
         {
-            depths[index] = new EntityList();
+            depths[index] = new List<Entity>();
         }
     }
 
@@ -50,10 +48,9 @@ public class Renderer extends Canvas implements Functions
 
     public void render(Graphics2D g)
     {
-       for (EntityList list : depths)
+       for (List list : depths)
        {
-           EntityIterator iterator = new EntityIterator(list);
-           
+           Iterator<Entity> iterator = new Iterator<Entity>(list);
            while (iterator.hasNext())
            {
                iterator.getNext().render(g);
@@ -73,8 +70,7 @@ public class Renderer extends Canvas implements Functions
     public void add(int depth, Entity entity)
     {
         depth = clamp(depth, 0, layers - 1);
-        entity.getNode().list = depths[depth];
-        depths[depth].add(entity);
+        depths[depth].add(entity.getRenderNode());
     }
 
     public void setDepth(int depth, Entity entity)
@@ -84,8 +80,9 @@ public class Renderer extends Canvas implements Functions
         then append it to the new list at the desired depth.
         */
         depth = clamp(depth, 0, layers - 1);
-        entity.getNode().freeNode();
-        depths[depth].add(entity);
+        entity.getRenderNode().freeNode();
+        System.out.println(entity.getRenderNode().list.first);
+        depths[depth].add(entity.getRenderNode());
     }
 
     public void show()

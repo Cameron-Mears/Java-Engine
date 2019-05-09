@@ -1,17 +1,17 @@
-package entities.entitylist;
+package game.list;
 
 import entities.Entity;
 
-public class EntityNode
+public class Node<Type>
 {
     /*
     Node for list holds to pointers to neighbors
     and to it's parent entity
     */
-    public EntityNode last;
-    public EntityNode next;
-    public Entity entity;
-    public EntityList list;
+    public Node last;
+    public Node next;
+    public Type data;
+    public List list;
 
     public boolean isFirst;
     public boolean isLast;
@@ -20,8 +20,14 @@ public class EntityNode
         This will free the node from the list in which it is contained,
         so that the object "dies", or so that it can be quickly switched over to another list.
     */
+
+    public Node(Type data)
+    {
+        this.data = data;
+    }
     public void freeNode()
     {
+        list = null;
        if (isFirst)
        {
             if (next != null)

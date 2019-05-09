@@ -1,11 +1,10 @@
 package game;
 
-import java.util.LinkedList;
 
 import entities.Entity;
+import game.list.*;
 
 import java.awt.Graphics2D;
-import java.util.Iterator;
 
 /*
     This class handles all entities in the game, gameEntities is for entities that need to be update each game tick
@@ -15,78 +14,34 @@ import java.util.Iterator;
 
 public class Handler
 {
-    private LinkedList<Entity> gameEntities = new LinkedList<Entity>();
-    private LinkedList<Entity> renderEntities = new LinkedList<Entity>();
-    private LinkedList<Timer> timers = new LinkedList<Timer>();
+    private List<Entity> gameEntities = new List<Entity>();
 
-    public void updateTimers()
-    {
-        Iterator<Timer> iterator = timers.iterator();
-
-        while (iterator.hasNext())
-        {
-            Timer temp = iterator.next();
-            temp.update(Game.deltaMS);
-        }
-    }
 
     public void tick()
     {
-        Iterator<Entity> iterator = gameEntities.iterator();
-
+        Iterator<Entity> iterator = new Iterator<Entity>(gameEntities);
         while (iterator.hasNext())
         {
-            Entity temp = iterator.next();
-            temp.tick();
+            iterator.getNext().tick();
         }
     }
 
-    public void render(Graphics2D g)
+    public void add(Entity entity)
     {
-        Iterator<Entity> iterator = renderEntities.iterator();
-
-        while (iterator.hasNext())
-        {
-            Entity temp = iterator.next();
-            temp.render(g);
-        }
-    }
-    public void removeTimer(Timer t)
-    {
-        timers.remove(t);
+        Node<Entity> node = entity.getHandlerNode();
+        gameEntities.add(node);
     }
 
-    public void addTimer(Timer t)
+
+    public void remove(Entity entity)
     {
-        timers.add(t);
-    }
-    public void tickAdd(Entity entity)
-    {
-        gameEntities.add(entity);
+        entity.getHandlerNode().freeNode();
     }
 
-    public void tickRemove(Entity entity)
-    {
-        gameEntities.remove(entity);
-    }
-
-    public void renderAdd(Entity entity)
-    {
-        renderEntities.add(entity);
-    }
-
-    public void renderRemove(Entity entity)
-    {
-        renderEntities.remove(entity);
-    }
-
-    public LinkedList<Entity> getTickEntities()
+    public List<Entity> getGameEntities()
     {
         return gameEntities;
     }
 
-    public LinkedList<Entity> getRenderEntities()
-    {
-        return renderEntities;
-    }
+
 }

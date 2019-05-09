@@ -2,7 +2,7 @@ package game;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.util.Iterator;
+import game.list.*;
 
 import entities.Entities;
 import entities.Entity;
@@ -47,11 +47,11 @@ public interface Functions extends Gamecore
     public default boolean checkEntityCollision(Entities type, Entity entityB)
     {
         
-        Iterator<Entity> iterator = Game.handler.getTickEntities().iterator();
+        Iterator<Entity> iterator = new Iterator<Entity>(Game.handler.getGameEntities());
 
         while (iterator.hasNext())
         {
-            Entity temp = iterator.next();
+            Entity temp = iterator.getNext();
             if (temp.getType() == type)
             {
                 if (checkEntityCollision(temp, entityB)) return true;
@@ -64,11 +64,11 @@ public interface Functions extends Gamecore
 
     public default Entity getEntityCollision(Entities type, Entity entityB)
     {
-        Iterator<Entity> iterator = Game.handler.getTickEntities().iterator();
+        Iterator<Entity> iterator = new Iterator<Entity>(Game.handler.getGameEntities());
 
         while (iterator.hasNext())
         {
-            Entity temp = iterator.next();
+            Entity temp = iterator.getNext();
             if (temp.getType() == type)
             {
                 if (checkEntityCollision(temp, entityB)) return temp;
@@ -76,6 +76,7 @@ public interface Functions extends Gamecore
         }
 
         return null;
+       
     }
 
     public default boolean checkGridCollision(Block[][] grid, Entity e, double x, double y)

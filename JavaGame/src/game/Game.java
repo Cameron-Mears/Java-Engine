@@ -66,8 +66,8 @@ public final class Game extends Thread implements Runnable
         handler = new Handler();
         Player temp = new Player(100, 100);
         Player2 temp2 = new Player2(150, 150);
-        handler.tickAdd(temp);
-        handler.tickAdd(temp2);
+        handler.add(temp);
+        handler.add(temp2);
         renderer.add(5, temp);
         renderer.add(10, temp2);
         levelConstructor = new LevelConstructor();
