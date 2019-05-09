@@ -48,18 +48,20 @@ public class Renderer extends Canvas implements Functions
         {
             EntityIterator iterator = new EntityIterator(list);
             if (list.getFirst() == null) continue;
-            while (iterator.hasNext())
+            do
             {
+                System.out.println("sd");
                 iterator.getNext().render(g);
             }
+            while (iterator.hasNext());
         }
     }
 
     public void add(int depth, Entity entity)
     {
-
         depth = clamp(depth, 0, layers - 1);
         depths[depth].add(entity);
+        System.out.println(depths[depth].getFirst());
     }
 
     public void setDepth(int depth, Entity entity)

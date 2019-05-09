@@ -31,6 +31,7 @@ public abstract class Entity implements Input, Gamecore, PhysicsCal, Functions
 
     public Entity(double x, double y)
     {
+        node = new EntityNode();
         vec = new Vec2d();
         vec.x = x;
         vec.y = y;

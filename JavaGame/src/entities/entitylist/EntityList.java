@@ -23,6 +23,7 @@ public class EntityList
               {
                      System.out.println("hi");
                      if (first == null) first = entity.getNode();
+                     System.out.println(first);
                      last = entity.getNode();
                      return;
               }
