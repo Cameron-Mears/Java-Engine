@@ -24,7 +24,7 @@ public class Player2 extends Entity
 {
     /*
      * images for sprites are contained in static folders to reduce RAM usage and
-     * computing time as ImageParser.parseFolder() is very slow. (like 3ms per frame)
+     * computing time as ImageParser.parseFolder() is very slow. (like 2ms per image)
      */
     private static BufferedImage[] images = ImageParser.parseFolder(new File(System.getProperty("user.dir") + "\\JavaGame\\assets\\sprites\\player"));
     private static BufferedImage[] xflipImages = ImageParser.flipImages(images);

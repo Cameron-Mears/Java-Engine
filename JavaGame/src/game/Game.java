@@ -43,6 +43,7 @@ public final class Game extends Thread implements Runnable
     public static Level level;
     public static boolean renderLevel = true;
 
+    //private constrcut as their is no need to rerun this thing.
     private Game()
     {
         init();

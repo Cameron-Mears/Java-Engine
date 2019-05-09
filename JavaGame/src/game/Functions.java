@@ -242,7 +242,9 @@ public interface Functions extends Gamecore
 
     /*
     trig functions use taylor series, functions approximate function angle is mod pi as function only
-    accutate to cos(pi) which is 1, -1, cos min.
+    accutate to cos(pi) which is 1, -1, cos min. This is better for game
+    as these trig functions are quite as accurate as their are less terms here
+    but still very close like 99.999% accurate, but with the bonus of much better preformance
     */
     public default double cos(double a)
     {

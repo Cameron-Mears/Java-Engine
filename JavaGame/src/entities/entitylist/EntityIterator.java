@@ -4,6 +4,9 @@ import entities.Entity;
 
 public class EntityIterator
 {
+    /*
+    List iterator for the entity list
+    */
     private EntityNode current;
 
     public EntityIterator(EntityList list)

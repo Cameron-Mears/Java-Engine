@@ -17,6 +17,11 @@ public class Renderer extends Canvas implements Functions
 {
     private static final long serialVersionUID = -8352885578412682145L;
     private static final int layers = 10;
+    /*
+        renderer holds all things to get rendered,
+        and creates a drawable canvas.
+        the number of layers is the depth range
+    */
     private EntityList[] depths = new EntityList[layers];    
     private BufferStrategy bs;
 
@@ -55,6 +60,15 @@ public class Renderer extends Canvas implements Functions
            }
        }
     }
+    /*
+        depth system just uses an array of entitylists
+        the lower the depth number, the higher depth.
+        eg. depth 9 will be drawn over depth 0
+        add method initally add to the renderer,
+        setDepth to change the depth of an existing entity,
+        to just remove an entity, call entity.getNode().freeNode()
+        that will remove it from list;
+    */
 
     public void add(int depth, Entity entity)
     {
