@@ -27,7 +27,6 @@ public class Node<Type>
     }
     public void freeNode()
     {
-        list = null;
        if (isFirst)
        {
             if (next != null)
@@ -39,6 +38,7 @@ public class Node<Type>
                 return;
             }
             list.first = null;
+            list.last = null;
             isFirst = false;
             next = last = null;
             return;

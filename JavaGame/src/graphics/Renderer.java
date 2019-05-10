@@ -83,6 +83,7 @@ public class Renderer extends Canvas implements Functions
         entity.getRenderNode().freeNode();
         System.out.println(entity.getRenderNode().list.first);
         depths[depth].add(entity.getRenderNode());
+        System.out.println(entity.getRenderNode().list.first);
     }
 
     public void show()

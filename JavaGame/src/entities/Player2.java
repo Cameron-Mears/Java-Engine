@@ -56,8 +56,8 @@ public class Player2 extends Entity
         if (keyDown(KeyEvent.VK_SPACE)) sprite.setImages(images);
         if (keyDown(KeyEvent.VK_UP)) vec.y += -1;
         if (keyDown(KeyEvent.VK_DOWN)) vec.y += 1;
-        if (keyDown('M')) Game.renderer.setDepth(10, this);
-        if (keyDown('N')) Game.renderer.setDepth(0, this);
+        if (keyPressed('M')) Game.renderer.setDepth(10, this);
+        if (keyPressed('N')) Game.renderer.setDepth(0, this);
         if (mousePressed(MouseButtons.LEFT)) 
         {
             Audio.playClip(test);
