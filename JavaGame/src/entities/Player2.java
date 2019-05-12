@@ -75,7 +75,7 @@ public class Player2 extends Entity
     }
 
     @Override
-    public void render(Graphics2D g)
+    public void render(Graphics2D g, int xOffset, int yOffset)
     {
         BufferedImage image = sprite.currentFrame();
         AffineTransform af = new AffineTransform();
@@ -83,6 +83,6 @@ public class Player2 extends Entity
         af.rotate(toRadians(vec.direction), image.getWidth()/2 * xScale, image.getHeight()/2 * yScale);
         af.scale(xScale, yScale);
         g.setColor(Color.blue);
-        g.fillRect((int) vec.x, (int) vec.y, 32, 32);
+        g.fillRect((int) vec.x + xOffset, (int) vec.y + yOffset, 32, 32);
     }
 }

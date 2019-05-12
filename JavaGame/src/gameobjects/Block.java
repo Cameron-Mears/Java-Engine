@@ -25,9 +25,9 @@ public class Block
         height = texture.getHeight();
     }
 
-    public void render(Graphics g)
+    public void render(Graphics g, int xOffset, int yOffset)
     {
-        g.drawImage(texture, xPos * width, yPos * height, null);
+        g.drawImage(texture, xPos * width + xOffset, yPos * height + yOffset, null);
     }
 
     public int getWidth()

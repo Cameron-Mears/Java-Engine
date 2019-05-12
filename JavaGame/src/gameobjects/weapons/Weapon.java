@@ -14,6 +14,7 @@ public abstract class Weapon implements Functions
     protected static BufferedImage[] images;
     protected double damage;
     protected AmmoType ammoType;
+    protected Elements element;
     protected int currentAmmo;
     protected int magSize;
     protected double fireRate;

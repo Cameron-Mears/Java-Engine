@@ -8,10 +8,10 @@ public class Node<Type>
     Node for list holds to pointers to neighbors
     and to it's parent entity
     */
-    public Node last;
-    public Node next;
+    public Node<Type> last;
+    public Node<Type> next;
     public Type data;
-    public List list;
+    public List<Type> list;
 
     public boolean isFirst;
     public boolean isLast;
@@ -27,7 +27,7 @@ public class Node<Type>
     }
     public void freeNode()
     {
-       if (isFirst)
+       if (isFirst) //if the entity is first in the list
        {
             if (next != null)
             {
@@ -43,7 +43,7 @@ public class Node<Type>
             next = last = null;
             return;
        }
-       if (isLast)
+       if (isLast) //last in the list
        {
             list.last = last;
             last.next = null;
@@ -51,12 +51,11 @@ public class Node<Type>
             next = last = null;
             return;
        }
-       
+       //another spot in the list
        last.next = next;
        next.last = last;
        last = next = null;
        return;
-
 
        
     }

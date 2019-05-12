@@ -27,8 +27,8 @@ public class LevelConstructor implements Functions
     {
         level = new Level();
         
-        int xCells = Game.windowWidth/blockTexture.getWidth()/2;
-        int yCells = Game.windowWidth / blockTexture.getHeight()/2;
+        int xCells = 20;
+        int yCells = 20;
 
         level.grid = new Block[xCells][yCells];
 
@@ -39,28 +39,26 @@ public class LevelConstructor implements Functions
                 level.grid[xIndex][yIndex] = new Block(xIndex, yIndex, blockTexture);
             }
         }
-        int x = 1;
-        int y = (int)( Math.random() * yCells);
-        y = clamp(y, 2, yCells - 1);
-        while (x > 0 && x < xCells - 1 && y > 0 && y < yCells - 1)
+        int x = randint(2, xCells - 2);
+        int y = yCells - 2;
+        level.grid[x][y] = null;
+        addEntity(new Player(x * 32, y * 32), 5);
+        while ( y > 1)
         {
             x += randint(-1, 1);
-            y += randint(-1, 1);
-            if (y == yCells - 2) y--;
-            if (y == 1) y ++;
-            if (x == 1) x++;
+            int tempY = randint(-3, 3);
+            y += (Math.abs(tempY) == 1)? tempY:0;
+
+            if (y > yCells - 3) y = yCells - 3;
+            if (x <= 1) x = 2;
+            if (x > xCells - 3) x = xCells - 3;
 
             level.grid[x][y] = null;
-            try{
                 level.grid[x + 1][y] = null;
                 level.grid[x - 1][y] = null;
                 level.grid[x][y + 1] = null;
                 level.grid[x][y - 1] = null;
-            }
-            catch (ArrayIndexOutOfBoundsException e)
-            {
-                return level;
-            }
+
         }
         return level;
 

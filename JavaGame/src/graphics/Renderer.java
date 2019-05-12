@@ -2,13 +2,15 @@ package graphics;
 
 import java.awt.Canvas;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.image.BufferStrategy;
-
 
 import entities.Entity;
 import game.list.*;
 import game.Functions;
+import game.Game;
+import game.Level;
 import game.Window;
 
 public class Renderer extends Canvas implements Functions
@@ -22,11 +24,14 @@ public class Renderer extends Canvas implements Functions
     */
     private List<Entity>[] depths = new List[layers];    
     private BufferStrategy bs;
+    public static Camera camera;
+
 
     public Renderer(Window window)
     {
         //this.setSize(window.getWindow().getWidth(), window.getWindow().getHeight());
         window.getWindow().add(this);
+        camera = new Camera(window.getWindow().getHeight(), window.getWindow().getHeight(), Camera.Mode.Box, new Dimension( 20 * 32, 20  *32));
         for (int index = 0; index < depths.length; index++)
         {
             depths[index] = new List<Entity>();
@@ -48,14 +53,22 @@ public class Renderer extends Canvas implements Functions
 
     public void render(Graphics2D g)
     {
+        Level level = Game.level;
+        if (level != null)
+        {
+        level.renderMain(g, 0, 0, 100, 100, camera.getXOffset(), camera.getYOffset());
+        }
        for (List list : depths)
        {
            Iterator<Entity> iterator = new Iterator<Entity>(list);
            while (iterator.hasNext())
            {
-               iterator.getNext().render(g);
+               iterator.getNext().render(g, camera.getXOffset(), camera.getYOffset());
            }
        }
+
+       System.out.println(camera.getXOffset());
+       System.out.println(camera.getYOffset());
     }
     /*
         depth system just uses an array of entitylists

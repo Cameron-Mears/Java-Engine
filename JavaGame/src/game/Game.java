@@ -25,7 +25,7 @@ import graphics.Sprite;
 public final class Game extends Thread implements Runnable
 {
     private boolean running = true;
-    private final int FPS = 300000;
+    private final int FPS = 30;
     private final int TPS = 100;
     private final long SEC = 1000000000;
     private final long MILLI_SEC = 1000000;
@@ -64,11 +64,8 @@ public final class Game extends Thread implements Runnable
         window.getWindow().setVisible(true);
         spriteHandler = new SpriteHandler(); 
         handler = new Handler();
-        Player temp = new Player(100, 100);
         Player2 temp2 = new Player2(150, 150);
-        handler.add(temp);
         handler.add(temp2);
-        renderer.add(5, temp);
         renderer.add(10, temp2);
         levelConstructor = new LevelConstructor();
         level = levelConstructor.newLevel(level);
@@ -142,12 +139,6 @@ public final class Game extends Thread implements Runnable
     void render()
     {
         Graphics2D g = renderer.createGraphics();
-        if (renderLevel)
-        {
-            level.renderMain(g, 0, 0, 1000, 1000);
-            renderLevel = false;
-        }
-        level.renderBack(g, 0, 0, 1000, 1000);
         renderer.render(g);
         renderer.show();
     }

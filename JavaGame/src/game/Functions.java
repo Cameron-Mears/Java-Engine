@@ -7,6 +7,7 @@ import game.list.*;
 import entities.Entities;
 import entities.Entity;
 import gameobjects.Block;
+import graphics.Camera;
 import physics.Vec2d;
 
 public interface Functions extends Gamecore
@@ -245,23 +246,16 @@ public interface Functions extends Gamecore
     trig functions use taylor series, functions approximate function angle is mod pi as function only
     accutate to cos(pi) which is 1, -1, cos min. This is better for game
     as these trig functions are quite as accurate as their are less terms here
-    but still very close like 99.999% accurate, but with the bonus of much better preformance
+    but still very close like 99.99% accurate, but with the bonus of much better preformance
     */
     public default double cos(double a)
     {
-        if (a % Math.PI == 0)
-        {
-            a = a/Math.PI % 2;
-            if (a == 1) return -1;
-            return 1;
-        }
         double angle = a % Math.PI;
         return (1 - Math.pow(angle, 2)/2 + Math.pow(angle, 4)/24 - Math.pow(angle, 6)/720 + Math.pow(angle, 8)/40320 - Math.pow(angle, 10)/3628800);
     }
 
     public default double sin(double a)
     {
-        if (a % Math.PI == 0) return 0;
         double angle = a % Math.PI;
         return (angle - Math.pow(angle, 3)/6 + Math.pow(angle, 5)/120 - Math.pow(angle, 7)/5040 + Math.pow(angle, 9)/362880 - Math.pow(angle, 11)/39916800);
     }
@@ -271,6 +265,18 @@ public interface Functions extends Gamecore
         //tan(theta) = sin(theta)/cos(theta)
         return sin(a)/cos(a);
     }
+
+    public default void addEntity(Entity entity, int depth)
+    {
+        Game.handler.add(entity);
+        Game.renderer.add(depth, entity);
+    }
+
+    public default Camera getCamera()
+    {
+        return Game.renderer.camera;
+    }
+
 
     
 }
