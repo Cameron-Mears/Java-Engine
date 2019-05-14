@@ -25,7 +25,7 @@ public class Node<Type>
     {
         this.data = data;
     }
-    public void freeNode()
+    public void free()
     {
        if (isFirst) //if the entity is first in the list
        {

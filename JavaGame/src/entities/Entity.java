@@ -80,7 +80,7 @@ public abstract class Entity implements Input, Gamecore, PhysicsCal, Functions
 
     }
 
-    public void render(Graphics2D g, int xOffset, int yOffset)
+    public void render(Graphics2D g)
     {
         
     }

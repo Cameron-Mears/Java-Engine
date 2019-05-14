@@ -8,6 +8,8 @@ import java.awt.image.BufferStrategy;
 
 import entities.Entity;
 import game.list.*;
+import gameobjects.Block;
+import physics.Vec2d;
 import game.Functions;
 import game.Game;
 import game.Level;
@@ -31,7 +33,7 @@ public class Renderer extends Canvas implements Functions
     {
         //this.setSize(window.getWindow().getWidth(), window.getWindow().getHeight());
         window.getWindow().add(this);
-        camera = new Camera(window.getWindow().getHeight(), window.getWindow().getHeight(), Camera.Mode.Box, new Dimension( 20 * 32, 20  *32));
+        camera = new Camera(1760 / 2, 992/2, Camera.Mode.Box, null);
         for (int index = 0; index < depths.length; index++)
         {
             depths[index] = new List<Entity>();
@@ -53,23 +55,46 @@ public class Renderer extends Canvas implements Functions
 
     public void render(Graphics2D g)
     {
+        int camX = camera.getXOffset();
+        int camY = camera.getYOffset();
+        camX = clamp(camX, 0,  Game.level.getWidth() - camera.getWidth() + Block.getWidth()/2);
+        camY = clamp(camY, 0, Game.level.getHeight() - camera.getHeight() + Block.getHeight());
+        //camY = clamp(camY, 0, Game.windowHeight - camera.getHeight()/2);
+        g.translate(-(camX), -camY);
         Level level = Game.level;
         if (level != null)
         {
-        level.renderMain(g, 0, 0, 100, 100, camera.getXOffset(), camera.getYOffset());
+
+            level.renderMain(g, Math.floorDiv(camX, Block.getWidth()), Math.floorDiv(camY, Block.getHeight()), (int)Math.ceil((camX + camera.getWidth())/Block.getWidth()) + 1,  (int)Math.ceil((camY + camera.getHeight())/Block.getHeight()) + 1);
         }
-       for (List list : depths)
+       for (List<Entity> list : depths)
        {
            Iterator<Entity> iterator = new Iterator<Entity>(list);
            while (iterator.hasNext())
            {
-               iterator.getNext().render(g, camera.getXOffset(), camera.getYOffset());
+               Entity temp = iterator.getNext();
+               Vec2d vec = temp.getVec();
+
+                if 
+                (
+                    camX < vec.x + (temp.getWidth() * temp.getXScale())
+                    &&
+                    camX + camera.getWidth() > vec.x
+                    &&
+                    camY < vec.y + (temp.getHeight() * temp.getYScale())
+                    &&
+                    camY + camera.getHeight() > vec.y
+                ) temp.render(g);
+                else continue;
+
            }
        }
 
-       System.out.println(camera.getXOffset());
-       System.out.println(camera.getYOffset());
+    g.translate(camX, camY);
     }
+
+
+
     /*
         depth system just uses an array of entitylists
         the lower the depth number, the higher depth.
@@ -93,7 +118,7 @@ public class Renderer extends Canvas implements Functions
         then append it to the new list at the desired depth.
         */
         depth = clamp(depth, 0, layers - 1);
-        entity.getRenderNode().freeNode();
+        entity.getRenderNode().free();
         System.out.println(entity.getRenderNode().list.first);
         depths[depth].add(entity.getRenderNode());
         System.out.println(entity.getRenderNode().list.first);
@@ -103,4 +128,5 @@ public class Renderer extends Canvas implements Functions
     {
         bs.show();
     }
+
 }

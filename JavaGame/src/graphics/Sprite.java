@@ -2,6 +2,8 @@ package graphics;
 
 import java.awt.image.BufferedImage;
 
+import game.list.Node;
+
 
 public class Sprite
 {
@@ -18,6 +20,7 @@ public class Sprite
     private int currentFrame;
     private double animationSpeed;
     private double currentwait;
+    private Node<Sprite> node = new Node<Sprite>(this);
 
     public Sprite(BufferedImage images[], double FPS)
     {
@@ -61,5 +64,10 @@ public class Sprite
             currentwait = animationSpeed + currentwait;
             currentFrame = (currentFrame + 1 > frames - 1)? 0:currentFrame + 1;
         }
+    }
+
+    public Node<Sprite> getNode()
+    {
+        return node;
     }
 }

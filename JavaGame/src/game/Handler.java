@@ -35,7 +35,7 @@ public class Handler
 
     public void remove(Entity entity)
     {
-        entity.getHandlerNode().freeNode();
+        entity.getHandlerNode().free();
     }
 
     public List<Entity> getGameEntities()

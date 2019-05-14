@@ -15,6 +15,8 @@ import game.Game;
 import game.Gamecore;
 import game.SpriteHandler;
 import game.input.MouseButtons;
+import gameobjects.weapons.AmmoType;
+import gameobjects.weapons.TommyGun;
 import graphics.Camera;
 import graphics.ImageParser;
 import graphics.Sprite;
@@ -28,15 +30,14 @@ public class Player extends Entity
      * computing time as ImageParser.parseFolder() is very slow. (like 3ms per
      * frame)
      */
-    private static BufferedImage[] images = ImageParser
-            .parseFolder(new File(System.getProperty("user.dir") + "\\JavaGame\\assets\\sprites\\player"));
+    private static BufferedImage[] images = ImageParser.parseFolder(new File(System.getProperty("user.dir") + "\\JavaGame\\assets\\sprites\\player"));
     private static BufferedImage[] xflipImages = ImageParser.flipImages(images);
-    private Clip test = Audio
-            .parseSound(new File(System.getProperty("user.dir") + "\\JavaGame\\assets\\sounds\\testing\\test.wav"));
+    private Clip test = Audio.parseSound(new File(System.getProperty("user.dir") + "\\JavaGame\\assets\\sounds\\testing\\test.wav"));
 
     private Sprite sprite;
     private double angle = 0.1;
     private Camera camera;
+    private TommyGun tommy = new TommyGun(0, 0, 0, 0, 0, AmmoType.ASSUALT_RIFLE);
 
     public Player(double x, double y) {
         super(x, y);
@@ -51,20 +52,21 @@ public class Player extends Entity
         type = Entities.Player;
         camera = getCamera();
         camera.setMode(Camera.Mode.Center);
+        camera.setTarget(this);
     }
 
     @Override
     public void tick()
     {
-        if (keyDown('A')) vec.x += -1;
-        if (keyDown('D')) vec.x += 1;
+        if (keyDown('A')) vec.x += -2;
+        if (keyDown('D')) vec.x += 2;
         if (keyDown(KeyEvent.VK_RIGHT)) vec.direction += 1;
         if (keyDown(KeyEvent.VK_SPACE)) sprite.setImages(images);
-        if (keyDown('W')) vec.y += -1;
-        if (keyDown('S')) vec.y += 1;
+        if (keyDown('W')) vec.y += -2;
+        if (keyDown('S')) vec.y += 2;
         if (mousePressed(MouseButtons.LEFT)) 
         {
-            Audio.playClip(test);
+            angle += 10;
         }
         if (!checkGridCollision(Game.level.grid, this, nextX(vec), nextY(vec))) vecUpdate(deltaSEC(), vec);
         else
@@ -76,18 +78,25 @@ public class Player extends Entity
         }
         getDirection(vec);
 
-        camera.setPos((int)vec.x, (int)vec.y);
+        camera.setPos((int)(vec.x + width / 2 * xScale) + mouseX(), (int)(vec.y + height / 2 * yScale) + mouseY());
 
     }
 
     @Override
-    public void render(Graphics2D g, int xOffset, int yOffset)
+    public void render(Graphics2D g)
     {
         BufferedImage image = sprite.currentFrame();
         AffineTransform af = new AffineTransform();
-        af.setToTranslation(vec.x + xOffset, vec.y + yOffset);
-        af.rotate(toRadians(vec.direction), image.getWidth()/2 * xScale, image.getHeight()/2 * yScale);
+        af.setToTranslation(vec.x, vec.y);
+        af.rotate(0, image.getWidth()/2 * xScale, image.getHeight()/2 * yScale);
         af.scale(xScale, yScale);
         g.drawImage(image, af, null);
+
+
+        af = new AffineTransform();
+        af.setToTranslation(vec.x, vec.y + 10);
+        af.scale(0.8, 0.8 );
+        af.rotate(toRadians(angle), 15, 7);
+        tommy.render(g, af);
     }
 }

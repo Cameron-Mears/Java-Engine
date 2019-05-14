@@ -25,7 +25,7 @@ import graphics.Sprite;
 public final class Game extends Thread implements Runnable
 {
     private boolean running = true;
-    private final int FPS = 30;
+    private final int FPS = 30000;
     private final int TPS = 100;
     private final long SEC = 1000000000;
     private final long MILLI_SEC = 1000000;

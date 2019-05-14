@@ -2,6 +2,8 @@ package graphics;
 
 import java.awt.Dimension;
 
+import entities.Entity;
+
 public class Camera
 {
     private int x = 0;
@@ -10,6 +12,7 @@ public class Camera
     private int width;
     private int height;
     private Dimension bounds;
+    private Entity target;
 
     private Mode mode = Mode.Box;
 
@@ -19,12 +22,12 @@ public class Camera
         Box;
     }
 
-    public Camera(int width, int height, Mode mode, Dimension bounds)
+    public Camera(int width, int height, Mode mode, Entity entity)
     {
         this.mode = mode;
         this.width = width;
         this.height = height;
-        this.bounds = bounds;
+        target = entity;
     }
 
     public void setMode(Mode mode)
@@ -43,8 +46,6 @@ public class Camera
         switch (mode)
         {
             case Center:{
-                if (x - width/2 <= 0) return 0;
-                if (x - width/2 >= bounds.getWidth()) return (int) bounds.getWidth();
                 return x - width/2;
             }
             case Box:
@@ -59,9 +60,7 @@ public class Camera
         switch (mode)
         {
             case Center:{
-                if (y - height/2 <= 0) return 0;
-                if (y - height/2 >= bounds.getHeight()) return (int) bounds.getHeight();
-                return y - height/2;
+                return (y - height/2);
             }
             case Box:
                 return y;
@@ -70,6 +69,28 @@ public class Camera
         }
     }
 
-    
+    public int getWidth()
+    {
+        return width;
+    }
+
+    public int getHeight()
+    {
+        return height;
+    }
+
+    public void setTarget(Entity target)
+    {
+        this.target = target;
+    }
+
+    public int getTargetYOffset()
+    {
+        return (target == null)? -1: (int)(target.getHeight() * target.getYScale());
+    }
+
+    public int getTargetXOffset() {
+        return (target == null) ? -1 : (int) (target.getWidth() * target.getXScale());
+    }
 
 }

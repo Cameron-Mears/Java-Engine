@@ -1,6 +1,8 @@
 package gameobjects.weapons;
 
 import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 
 import game.Functions;
@@ -43,7 +45,7 @@ public abstract class Weapon implements Functions
 
     public double setAccuarcy(double accuarcy)
     {
-        return clamp(accuarcy, 1, 100);
+        return clamp(accuarcy, 0.11, 100);
     }
 
     protected double getDirection()
@@ -85,7 +87,7 @@ public abstract class Weapon implements Functions
         return false;        
     }
 
-    public void render(Graphics g)
+    public void render(Graphics2D g, AffineTransform transform)
     {
         
     }

@@ -58,10 +58,6 @@ public class Player2 extends Entity
         if (keyDown(KeyEvent.VK_DOWN)) vec.y += 1;
         if (keyPressed('M')) Game.renderer.setDepth(10, this);
         if (keyPressed('N')) Game.renderer.setDepth(0, this);
-        if (mousePressed(MouseButtons.LEFT)) 
-        {
-            Audio.playClip(test);
-        }
         if (!checkGridCollision(Game.level.grid, this, nextX(vec), nextY(vec))) vecUpdate(deltaSEC(), vec);
         else
         {
@@ -75,7 +71,7 @@ public class Player2 extends Entity
     }
 
     @Override
-    public void render(Graphics2D g, int xOffset, int yOffset)
+    public void render(Graphics2D g)
     {
         BufferedImage image = sprite.currentFrame();
         AffineTransform af = new AffineTransform();
@@ -83,6 +79,6 @@ public class Player2 extends Entity
         af.rotate(toRadians(vec.direction), image.getWidth()/2 * xScale, image.getHeight()/2 * yScale);
         af.scale(xScale, yScale);
         g.setColor(Color.blue);
-        g.fillRect((int) vec.x + xOffset, (int) vec.y + yOffset, 32, 32);
+        g.fillRect((int) vec.x, (int) vec.y, 32, 32);
     }
 }

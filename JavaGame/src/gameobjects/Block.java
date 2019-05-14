@@ -8,13 +8,13 @@ import game.Gamecore;
 
 public class Block
 {
-    private BufferedImage texture;
+    private static BufferedImage texture;
 
     private int xPos;
     private int yPos;
 
-    private int width;
-    private int height;
+    private static int width;
+    private static int height;
 
     public Block( int x, int y, BufferedImage texture)
     {
@@ -25,17 +25,17 @@ public class Block
         height = texture.getHeight();
     }
 
-    public void render(Graphics g, int xOffset, int yOffset)
+    public void render(Graphics g)
     {
-        g.drawImage(texture, xPos * width + xOffset, yPos * height + yOffset, null);
+        g.drawImage(texture, xPos * width, yPos * height, null);
     }
 
-    public int getWidth()
+    public static int getWidth()
     {
         return width;
     }
 
-    public int getHeight()
+    public static int getHeight()
     {
         return height;
     }

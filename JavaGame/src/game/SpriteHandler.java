@@ -1,8 +1,7 @@
 package game;
 
-import java.util.Iterator;
-import java.util.LinkedList;
-
+import game.list.Iterator;
+import game.list.List;
 import graphics.Sprite;
 
 public class SpriteHandler
@@ -10,25 +9,25 @@ public class SpriteHandler
     /*
         Handles animation of sprites, pretty sraight foward
     */
-    public static LinkedList<Sprite> sprites = new LinkedList<Sprite>();
+    public static List<Sprite> sprites = new List<Sprite>();
 
     public void update(double deltaMS)
     {
-        Iterator<Sprite> iterator = sprites.iterator();
+        Iterator<Sprite> iterator =  new Iterator<Sprite>(sprites);
         while (iterator.hasNext())
         {
-            iterator.next().update(deltaMS);
+            iterator.getNext().update(deltaMS);
         }
     }
 
     public void add(Sprite spr)
     {
-        sprites.add(spr);
+        sprites.add(spr.getNode());
     }
 
     public void remove(Sprite spr)
     {
-        sprites.remove(spr);
+        spr.getNode().free();
     }
 
 
