@@ -64,10 +64,7 @@ public class Player extends Entity
         if (keyDown(KeyEvent.VK_SPACE)) sprite.setImages(images);
         if (keyDown('W')) vec.y += -2;
         if (keyDown('S')) vec.y += 2;
-        if (mousePressed(MouseButtons.LEFT)) 
-        {
-            angle += 10;
-        }
+        angle = directionPoint(vec.x, vec.y, vec.x + mouseX(), vec.y + mouseY());
         if (!checkGridCollision(Game.level.grid, this, nextX(vec), nextY(vec))) vecUpdate(deltaSEC(), vec);
         else
         {
@@ -92,6 +89,7 @@ public class Player extends Entity
         af.scale(xScale, yScale);
         g.drawImage(image, af, null);
 
+            System.out.println(mouseX());
 
         af = new AffineTransform();
         af.setToTranslation(vec.x, vec.y + 10);

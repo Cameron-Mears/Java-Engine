@@ -1,5 +1,7 @@
 package game.input;
 
+import graphics.Renderer;
+
 /*
     interface for receving input
 */
@@ -42,11 +44,11 @@ public interface Input
 
     default int mouseX()
     {
-        return InputHandler.mouseX;
+        return InputHandler.mouseX + Renderer.camera.getX();
     }
 
     default int mouseY() 
     {
-        return InputHandler.mouseY;
+        return InputHandler.mouseY + Renderer.camera.getY();
     }
 }

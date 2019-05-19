@@ -171,7 +171,8 @@ public final class Game extends Thread implements Runnable
     {
         GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
         
-        config = new GraphicsConfiguration(){
+        config = new GraphicsConfiguration()
+        {
         
             @Override
             public AffineTransform getNormalizingTransform() {

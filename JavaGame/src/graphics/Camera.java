@@ -89,8 +89,21 @@ public class Camera
         return (target == null)? -1: (int)(target.getHeight() * target.getYScale());
     }
 
-    public int getTargetXOffset() {
+    public int getTargetXOffset() 
+    {
         return (target == null) ? -1 : (int) (target.getWidth() * target.getXScale());
     }
+
+    public int getX()
+    {
+        return x;
+    }
+
+    public int getY()
+    {
+        return y;
+    }
+
+
 
 }

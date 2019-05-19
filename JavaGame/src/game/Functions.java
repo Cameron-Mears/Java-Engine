@@ -199,6 +199,36 @@ public interface Functions extends Gamecore
         return (angle * (180 / Math.PI));
     }
 
+    public default double directionPoint(double x1, double y1, double x2, double y2)
+    {
+        double deltaY = y2 - y1;
+        double deltaX = x2 - x1;
+        double temp = toDegrees(Math.abs(Math.atan(deltaY/deltaX)));
+        if (deltaY < 0 && deltaX > 0)
+        {
+            return temp;
+        }
+
+        if (deltaY < 0 && deltaX < 0) 
+        {
+            return 360 - temp; 
+
+        }
+
+        if (deltaY > 0 && deltaX > 0)
+        {
+            return 180 - temp;
+        }
+
+        else
+        {
+            return 180 + temp;
+
+        }
+    
+
+    } 
+
     public default Vec2d getDirection(Vec2d vec)
     {
         if (vec.velX == 0)
