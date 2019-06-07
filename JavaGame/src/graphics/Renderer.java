@@ -33,7 +33,7 @@ public class Renderer extends Canvas implements Functions
     {
         //this.setSize(window.getWindow().getWidth(), window.getWindow().getHeight());
         window.getWindow().add(this);
-        camera = new Camera(1760 / 2, 992/2, Camera.Mode.Box, null);
+        camera = new Camera(Game.windowWidth, Game.windowHeight, Camera.Mode.Box, null);
         for (int index = 0; index < depths.length; index++)
         {
             depths[index] = new List<Entity>();
@@ -57,14 +57,11 @@ public class Renderer extends Canvas implements Functions
     {
         int camX = camera.getXOffset();
         int camY = camera.getYOffset();
-        camX = clamp(camX, 0,  Game.level.getWidth() - camera.getWidth() + Block.getWidth()/2);
-        camY = clamp(camY, 0, Game.level.getHeight() - camera.getHeight() + Block.getHeight());
-        //camY = clamp(camY, 0, Game.windowHeight - camera.getHeight()/2);
+
         g.translate(-(camX), -camY);
         Level level = Game.level;
         if (level != null)
         {
-
             level.renderMain(g, Math.floorDiv(camX, Block.getWidth()), Math.floorDiv(camY, Block.getHeight()), (int)Math.ceil((camX + camera.getWidth())/Block.getWidth()) + 1,  (int)Math.ceil((camY + camera.getHeight())/Block.getHeight()) + 1);
         }
        for (List<Entity> list : depths)
@@ -76,6 +73,7 @@ public class Renderer extends Canvas implements Functions
                Vec2d vec = temp.getVec();
 
                 if 
+
                 (
                     camX < vec.x + (temp.getWidth() * temp.getXScale())
                     &&

@@ -3,8 +3,11 @@ package graphics;
 import java.awt.Dimension;
 
 import entities.Entity;
+import game.Functions;
+import game.Game;
+import gameobjects.Block;
 
-public class Camera
+public class Camera implements Functions
 {
     private int x = 0;
     private int y = 0;
@@ -46,7 +49,7 @@ public class Camera
         switch (mode)
         {
             case Center:{
-                return x - width/2;
+                return  clamp(x - width/2, 0,  Game.level.getWidth() - width + Block.getWidth()/2);
             }
             case Box:
                 return x;
@@ -60,10 +63,10 @@ public class Camera
         switch (mode)
         {
             case Center:{
-                return (y - height/2);
+                return clamp(y - height/2, 0,  Game.level.getHeight() -height + 192);
             }
             case Box:
-                return y;
+                return clamp(x - width/2, 0,  Game.level.getHeight() - height + Block.getWidth()/2);
             default:
                 return 0;
         }

@@ -26,6 +26,7 @@ public class Window
         frame.setSize(width, height);
         frame.setIconImage(icon);
         frame.setResizable(false);
+        frame.setSize(width,height);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
     }

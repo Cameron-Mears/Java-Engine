@@ -43,8 +43,8 @@ public class Player extends Entity
         super(x, y);
         sprite = new Sprite(xflipImages, 15);
         addSprite(sprite);
-        xScale = 0.5;
-        yScale = 0.5;
+        xScale = 1;
+        yScale = 1;
 
         width = images[0].getWidth();
         height = images[0].getHeight();
@@ -58,13 +58,13 @@ public class Player extends Entity
     @Override
     public void tick()
     {
-        if (keyDown('A')) vec.x += -2;
-        if (keyDown('D')) vec.x += 2;
+        if (keyDown('A')) vec.x += -8;
+        if (keyDown('D')) vec.x += 8;
         if (keyDown(KeyEvent.VK_RIGHT)) vec.direction += 1;
         if (keyDown(KeyEvent.VK_SPACE)) sprite.setImages(images);
-        if (keyDown('W')) vec.y += -2;
-        if (keyDown('S')) vec.y += 2;
-        angle = directionPoint(vec.x, vec.y, vec.x + mouseX(), vec.y + mouseY());
+        if (keyDown('W')) vec.y += -8;
+        if (keyDown('S')) vec.y += 8;
+        angle = directionPoint(vec.x, vec.y, mouseX(), mouseY());
         if (!checkGridCollision(Game.level.grid, this, nextX(vec), nextY(vec))) vecUpdate(deltaSEC(), vec);
         else
         {
@@ -75,7 +75,7 @@ public class Player extends Entity
         }
         getDirection(vec);
 
-        camera.setPos((int)(vec.x + width / 2 * xScale) + mouseX(), (int)(vec.y + height / 2 * yScale) + mouseY());
+        camera.setPos((int)(vec.x + width / 2 * xScale), (int)(vec.y + height / 2 * yScale));
 
     }
 
@@ -89,12 +89,10 @@ public class Player extends Entity
         af.scale(xScale, yScale);
         g.drawImage(image, af, null);
 
-            System.out.println(mouseX());
-
         af = new AffineTransform();
-        af.setToTranslation(vec.x, vec.y + 10);
-        af.scale(0.8, 0.8 );
-        af.rotate(toRadians(angle), 15, 7);
+        af.setToTranslation(vec.x + 12, vec.y + 25);
+        af.scale(1.5, 1.5);
+        af.rotate(toRadians(-angle), 5, 8);
         tommy.render(g, af);
     }
 }

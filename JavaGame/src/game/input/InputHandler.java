@@ -3,6 +3,7 @@ package game.input;
 import game.Window;
 import graphics.Renderer;
 
+import java.awt.MouseInfo;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -87,8 +88,10 @@ public final class InputHandler extends KeyAdapter implements KeyListener, Mouse
     }
 
     @Override
-    public void mouseDragged(MouseEvent e) {
-
+    public void mouseDragged(MouseEvent e) 
+    {
+        mouseX = e.getX();
+        mouseY = e.getY();
     }
 
     @Override
@@ -133,6 +136,8 @@ public final class InputHandler extends KeyAdapter implements KeyListener, Mouse
 
     public static void update() //updates states of pressed / released button states , as they go trough one 
     {
+        mouseX = (int) MouseInfo.getPointerInfo().getLocation().getX();
+        mouseY = (int) MouseInfo.getPointerInfo().getLocation().getY();
         if (flagged) 
         {
             for (int i = 0; i < ResetKeys.size(); i++) 

@@ -27,8 +27,8 @@ public class LevelConstructor implements Functions
     {
         level = new Level();
         
-        int xCells = 40;
-        int yCells = 50;
+        int xCells = 100;
+        int yCells = 200;
         level.setHeight(yCells * 32);
         level.setWidth(xCells * 32);
 
@@ -44,7 +44,7 @@ public class LevelConstructor implements Functions
         int x = randint(2, xCells - 2);
         int y = yCells - 2;
         level.grid[x][y] = null;
-        addEntity(new Player((x - 1) * 32, (y - 1) * 32), 5);
+        addEntity(new Player(x * 32, y * 32), 5);
         while ( y > 1)
         {
             x += randint(-1, 1);

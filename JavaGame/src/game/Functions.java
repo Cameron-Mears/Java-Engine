@@ -203,31 +203,24 @@ public interface Functions extends Gamecore
     {
         double deltaY = y2 - y1;
         double deltaX = x2 - x1;
-        double temp = toDegrees(Math.abs(Math.atan(deltaY/deltaX)));
-        if (deltaY < 0 && deltaX > 0)
-        {
-            return temp;
-        }
+        
 
-        if (deltaY < 0 && deltaX < 0) 
-        {
-            return 360 - temp; 
 
-        }
+        double angle = toDegrees(Math.atan(Math.abs(deltaX)/Math.abs(deltaY)));
+        if (angle == 0) angle += 0.000001;
 
-        if (deltaY > 0 && deltaX > 0)
-        {
-            return 180 - temp;
-        }
+        if (deltaY < 0 && deltaX > 0) return 90 - angle;
 
-        else
-        {
-            return 180 + temp;
+        if (deltaY < 0 && deltaX < 0) return angle + 90;
 
-        }
+        if (deltaY > 0 && deltaX < 0) return 270 - angle;
+
+        if (deltaY > 0 && deltaX > 0) return angle + 270;
+        return angle;
+
+    }
+
     
-
-    } 
 
     public default Vec2d getDirection(Vec2d vec)
     {
