@@ -12,6 +12,8 @@ public class Block
 
     private int xPos;
     private int yPos;
+    private int xRender;
+    private int yRender;
 
     private static int width;
     private static int height;
@@ -23,11 +25,13 @@ public class Block
         yPos = y;
         width = texture.getWidth();
         height = texture.getHeight();
+        xRender = xPos * width;
+        yRender = yPos * height;
     }
 
     public void render(Graphics g)
     {
-        g.drawImage(texture, xPos * width, yPos * height, null);
+        g.drawImage(texture, xRender, yRender, null);
     }
 
     public static int getWidth()
